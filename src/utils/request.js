@@ -3,7 +3,7 @@ import axios from 'axios'
 import Message from '../utils/message'
 
 const instance = axios.create({
-    baseURL: "/api",
+    baseURL: "http://localhost:3000/api",
     timeout: 10*1000,
 })
 

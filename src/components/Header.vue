@@ -34,12 +34,12 @@
           </li>
           <li class="item-singUp">
             <div class="singUp">
-              <a href="#">注册</a>
+              <a href="#" @click="loginAndRegister(0)">注册</a>
             </div>
           </li>
           <li class="item-logIn">
             <div class="login">
-              <a href="#">登录</a>
+              <a href="#"  @click="loginAndRegister(1)">登录</a>
             </div>
           </li>
           <li class="aboutMe">
@@ -47,32 +47,29 @@
           </li>
         </ul>
       </div>
+      <LoginAndRegister ref="loginAndRegisterRef"></LoginAndRegister>
     </el-header>
   </div>
 </template>
 <script>
+// import Dialog from './Dialog.vue'
+import LoginAndRegister from '../views/LoginAndRegister.vue';
 export default {
+  components: { LoginAndRegister },
   data() {
     return {
       input: "",
-      isShowSlogan: true
+      isShowSlogan: true,
     };
   },
   methods: {
-    showSlogan() {
-      this.$refs.search.addEventListener('focus', function () {
-        console.log(1);
-      })
-      console.log(this.$refs.search);
+    //登录注册
+    loginAndRegister(type) {
+      this.$refs.loginAndRegisterRef.showPanel(type)
     }
-  },
-  mounted() {
-    this.showSlogan()
-    this.$refs.search.addEventListener('focus', function () {
-        console.log('focus');
-      })
+
   }
-};
+}
 </script>
 <style scoped lang="scss">
 .el-header {
