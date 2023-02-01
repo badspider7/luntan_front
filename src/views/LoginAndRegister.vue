@@ -4,7 +4,6 @@
       :show="dialogConfig.showDialog"
       @close="dialogConfig.showDialog = false"
       :title="dialogConfig.title"
-      :buttons="dialogConfig.buttons"
       width="400px"
       :showCancel="false"
       :opType="opType"
@@ -84,6 +83,7 @@
 import Dialog from "../components/Dialog.vue";
 export default {
   components: { Dialog },
+  props:['LoginIs'],
   data() {
     return {
       opType: 0, //0:注册  1:登录  2； 重置密码
@@ -92,8 +92,8 @@ export default {
         title: "标题",
       },
       formData: {
-        email: "test1@qq.com",
-        password: "123123",
+        email: "",
+        password: "",
         configPassword: "",
         rememberMe: false,
         username: "",
@@ -144,6 +144,14 @@ export default {
       }
       this.$nextTick(() => {
         this.$refs.formDataRef.resetFields();
+
+        //登录 从cookie中拿到数据 
+        if (this.opType == 1) {
+          const cookieLoginInfo = document.cookie
+          if (cookieLoginInfo) {
+            this.formData = JSON.parse(cookieLoginInfo.split('=')[1])
+          }
+        }
       });
     },
 

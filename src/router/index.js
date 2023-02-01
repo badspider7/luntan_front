@@ -5,7 +5,12 @@ Vue.use(VueRouter)
 
 const routes = [{
     path: "/",
-    component: () => import('../views/Home.vue')
+    component: () => import('../views/Home.vue'),
+    children: [{
+      path: '/',
+      name: "ArticleList",
+      component: () => import('../views/forum/ArticleList.vue')
+    }]
   }, {
     name: "chatRoom",
     path: "/chatRoom",
@@ -15,14 +20,14 @@ const routes = [{
     name: "Blog",
     path: "/blog",
     component: () => import("../views/Blog.vue")
-  },{
+  }, {
     name: "Tags",
     path: "/tags",
     component: () => import("../views/Tags.vue")
   },
   {
     path: "/aboutme",
-    component:()=>import("../views/AboutMe.vue")
+    component: () => import("../views/AboutMe.vue")
   }
 
 ]

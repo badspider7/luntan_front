@@ -2,14 +2,14 @@
   <div class="dialog">
     <el-dialog
       :title="title"
-      :visible.sync="show"
+      :visible="show"
       :close-on-click-modal="false"
       :show-close="showClose"
       custom-class="custom-dialog"
       :width="width"
       :top="top"
       :modal-append-to-body="false"
-      @closed="close"
+      @close="close"
     >
       <div class="dialog-body">
         <slot></slot>
@@ -26,8 +26,12 @@
 </template>
 
 <script>
+// import { mapState } from "vuex";
 import { login, register } from "../api/user";
 export default {
+  // inject:[
+  //   "LoginIs"
+  // ],
   props: {
     show: {
       type: Boolean,
@@ -58,10 +62,13 @@ export default {
     },
     formData: {
       type: Object,
-    },
+    }
   },
   data() {
     return {};
+  },
+  computed: {
+    // ...mapState(['loginIs'])
   },
   methods: {
     close() {
@@ -99,19 +106,38 @@ export default {
             email: this.formData.email,
             password: this.formData.password,
           });
-          this.$message({
-            message: "登录成功",
-            type: "success",
-            duration: 1500,
-          });
           //将后端返回的token等用户信息放到vueX容器中
           this.$store.commit("setUser", {
             token: data.authorization.token,
             username: data.username,
             id: data.id,
             email: data.email,
-            avatar_url:data.avatar_url
+            avatar_url: data.avatar_url,
           });
+          //记住我  保存cookie信息
+          if (this.formData.rememberMe) {
+            let loginInfo = {
+              email: this.formData.email,
+              password: this.formData.password,
+              rememberMe:this.formData.rememberMe
+            };
+            loginInfo = JSON.stringify(loginInfo)
+            var d = new Date();
+            d.setTime(d.getTime() + 7 * 24 * 60 * 60 * 1000);
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = `loginInfo=${loginInfo};expires = ${expires}`;
+          } else {
+            document.cookie = "loginInfo=;expires=Thu, 01 Jan 1970 00:00:00 GMT"
+          }
+          this.close()
+
+          this.$message({
+            message: "登录成功",
+            type: "success",
+            duration: 1500,
+          });
+          //不能改props的数据
+          this.$store.commit('setLoginIs',true)
         } catch (err) {
           this.$message({
             message: `登录失败,${err.response.data.msg}`,

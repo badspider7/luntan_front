@@ -32,17 +32,17 @@
               <router-link to="/chatroom">聊天室</router-link>
             </div>
           </li>
-          <li class="item-singUp" style="display: none">
+          <li class="item-singUp" v-if="!loginIs">
             <div class="singUp">
               <a href="#" @click="loginAndRegister(0)">注册</a>
             </div>
           </li>
-          <li class="item-logIn" style="display: none">
+          <li class="item-logIn" v-if="!loginIs">
             <div class="login">
               <a href="#" @click="loginAndRegister(1)">登录</a>
             </div>
           </li>
-          <li class="item-dropDown">
+          <li class="item-dropDown" v-if="loginIs">
             <el-dropdown trigger="click" @visible-change="changeStyle">
               <button class="el-dropdown-link" ref="dropdownBtn">
                 <el-avatar :src="$store.state.user.avatar_url"></el-avatar>
@@ -54,11 +54,8 @@
                   >个人主页</el-dropdown-item
                 >
                 <el-dropdown-item icon="el-icon-s-tools">设置</el-dropdown-item>
-                <el-dropdown-item
-                  :divided="true"
-                  icon="el-icon-caret-right
-"
-                  >退出</el-dropdown-item
+                <el-dropdown-item :divided="true" icon="el-icon-caret-right"
+                  ><span @click="exitLogin">退出</span></el-dropdown-item
                 >
               </el-dropdown-menu>
             </el-dropdown>
@@ -73,6 +70,7 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 import { poetry } from "../api/user";
 import LoginAndRegister from "../views/LoginAndRegister.vue";
 export default {
@@ -83,6 +81,22 @@ export default {
       isShowSlogan: true,
       poem: "",
     };
+  },
+  // watch: {
+  //   loginIs: {
+  //     immediate:true,
+  //     handler(newValue, oldValue) {
+  //       console.log('newValue:'+newValue,oldValue);
+  //     }
+  //   }
+  // },
+  // provide() {
+  //   return {
+  //     loginIs:this.loginIs
+  //   }
+  // },
+  computed: {
+    ...mapState(['loginIs'])
   },
   methods: {
     //登录注册
@@ -97,16 +111,29 @@ export default {
         this.$refs.dropdownBtn.classList.remove("btn-click");
       }
     },
+      //判断是否登录
+    isLogin() {
+      // this.loginIs = document.cookie ? true : false;
+      this.$store.commit('setLoginIs',document.cookie ? true : false)
+      },
+    //退出登录
+    exitLogin() {
+      this.$store.commit('setLoginIs',false)
+      // this.loginIs = false;
+    },
   },
 
   async mounted() {
     try {
       const { data } = await poetry();
       this.poem = data.data;
+      this.isLogin()
     } catch (err) {
       console.log(err);
     }
   },
+
+
 };
 </script>
 <style scoped lang="scss">
@@ -128,6 +155,7 @@ export default {
   border-bottom: 1px solid;
   border-bottom-color: #e4f6e9;
   z-index: 99;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
   .Header-secondary {
     margin-left: 155px;
     position: relative;

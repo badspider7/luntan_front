@@ -56,6 +56,9 @@
             <img :src="item.src" alt="hello" />
           </el-carousel-item>
         </el-carousel>
+        <div class="body-content">
+          <router-view></router-view>
+        </div>
       </el-main>
       <!-- 底部 -->
     </el-container>
