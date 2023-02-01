@@ -11,7 +11,7 @@
         </router-link>
       </h1>
       <div class="hitokoto" v-show="isShowSlogan">
-        <span>今年花落颜色改，明年花开复谁在？</span>
+        <span>{{ poem }}</span>
       </div>
       <div class="Header-secondary">
         <ul class="Header-controls">
@@ -22,8 +22,8 @@
                 v-model="input"
                 class="FormControl"
                 placeholder="搜索"
-                @focus="isShowSlogan=false"
-                @blur="isShowSlogan=true"
+                @focus="isShowSlogan = false"
+                @blur="isShowSlogan = true"
               />
             </div>
           </li>
@@ -32,15 +32,36 @@
               <router-link to="/chatroom">聊天室</router-link>
             </div>
           </li>
-          <li class="item-singUp">
+          <li class="item-singUp" style="display: none">
             <div class="singUp">
               <a href="#" @click="loginAndRegister(0)">注册</a>
             </div>
           </li>
-          <li class="item-logIn">
+          <li class="item-logIn" style="display: none">
             <div class="login">
-              <a href="#"  @click="loginAndRegister(1)">登录</a>
+              <a href="#" @click="loginAndRegister(1)">登录</a>
             </div>
+          </li>
+          <li class="item-dropDown">
+            <el-dropdown trigger="click" @visible-change="changeStyle">
+              <button class="el-dropdown-link" ref="dropdownBtn">
+                <el-avatar :src="$store.state.user.avatar_url"></el-avatar>
+                <span class="username">Badspider</span>
+              </button>
+
+              <el-dropdown-menu class="dropdown-menu" slot="dropdown">
+                <el-dropdown-item icon="el-icon-user-solid"
+                  >个人主页</el-dropdown-item
+                >
+                <el-dropdown-item icon="el-icon-s-tools">设置</el-dropdown-item>
+                <el-dropdown-item
+                  :divided="true"
+                  icon="el-icon-caret-right
+"
+                  >退出</el-dropdown-item
+                >
+              </el-dropdown-menu>
+            </el-dropdown>
           </li>
           <li class="aboutMe">
             <router-link to="/aboutme"><span>关于我</span></router-link>
@@ -52,26 +73,47 @@
   </div>
 </template>
 <script>
-// import Dialog from './Dialog.vue'
-import LoginAndRegister from '../views/LoginAndRegister.vue';
+import { poetry } from "../api/user";
+import LoginAndRegister from "../views/LoginAndRegister.vue";
 export default {
   components: { LoginAndRegister },
   data() {
     return {
       input: "",
       isShowSlogan: true,
+      poem: "",
     };
   },
   methods: {
     //登录注册
     loginAndRegister(type) {
-      this.$refs.loginAndRegisterRef.showPanel(type)
-    }
+      this.$refs.loginAndRegisterRef.showPanel(type);
+    },
+    //修改button的样式
+    changeStyle(e) {
+      if (e) {
+        this.$refs.dropdownBtn.classList.add("btn-click");
+      } else {
+        this.$refs.dropdownBtn.classList.remove("btn-click");
+      }
+    },
+  },
 
-  }
-}
+  async mounted() {
+    try {
+      const { data } = await poetry();
+      this.poem = data.data;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+};
 </script>
 <style scoped lang="scss">
+.btn-click {
+  background-color: #e4f6e9 !important ;
+  box-shadow: 2px 3px 2px #697e6f inset;
+}
 .el-header {
   position: fixed;
   top: 0;
@@ -118,6 +160,36 @@ export default {
           }
         }
       }
+      .item-dropDown {
+        button {
+          border-radius: 18px;
+          border: none;
+          user-select: none;
+          background: transparent;
+          text-align: center;
+          vertical-align: middle;
+          cursor: pointer;
+          line-height: 20px;
+          white-space: nowrap;
+          padding: 3px 13px;
+
+          &:hover {
+            background-color: #e4f6e9;
+          }
+
+          .username {
+            position: relative;
+            bottom: 3px;
+          }
+        }
+        .el-avatar {
+          position: relative;
+          top: 3px;
+          width: 24px;
+          height: 24px;
+          margin-right: 5px;
+        }
+      }
       li {
         display: inline-block;
         vertical-align: middle;
@@ -147,11 +219,11 @@ export default {
       max-height: 30px;
     }
   }
-  .hitokoto{
+  .hitokoto {
     position: absolute;
     left: 34%;
     top: 29%;
-    span{
+    span {
       color: #76a591;
     }
   }

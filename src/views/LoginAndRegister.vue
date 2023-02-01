@@ -7,6 +7,8 @@
       :buttons="dialogConfig.buttons"
       width="400px"
       :showCancel="false"
+      :opType="opType"
+      :formData="formData"
     >
       <el-form :model="formData" :rules="rules" ref="formDataRef">
         <el-form-item class="loginButtons">
@@ -44,17 +46,6 @@
           >
           </el-input>
         </el-form-item>
-        <!-- 注册密码
-        <el-form-item porp="registerPassword">
-          <el-input
-            size="large"
-            placeholder="请输入密码"
-            v-model="formData.registerPassword"
-            prefix-icon="el-icon-lock"
-            show-password
-          >
-          </el-input>
-        </el-form-item> -->
         <!-- 确认密码 -->
         <el-form-item prop="configPassword" v-if="opType == 0">
           <el-input
@@ -99,17 +90,10 @@ export default {
       dialogConfig: {
         showDialog: false,
         title: "标题",
-        buttons: [
-          {
-            type: "primary",
-            text: "",
-          },
-        ],
       },
       formData: {
-        email: "",
-        password: "",
-        // registerPassword: "",
+        email: "test1@qq.com",
+        password: "123123",
         configPassword: "",
         rememberMe: false,
         username: "",
@@ -163,6 +147,7 @@ export default {
       });
     },
 
+    //展示登录注册面板
     showPanel(type) {
       this.opType = type;
       this.resetForm();
@@ -171,8 +156,8 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.el-dialog__header{
-border-bottom:1px solid #ccc
+.el-dialog__header {
+  border-bottom: 1px solid #ccc;
 }
 .loginButtons {
   margin-bottom: 25px;
@@ -206,7 +191,7 @@ border-bottom:1px solid #ccc
   a {
     color: #29d17a;
   }
-  div[data-v-c752bbaa]{
+  div[data-v-c752bbaa] {
     margin-right: 3vh;
   }
 }

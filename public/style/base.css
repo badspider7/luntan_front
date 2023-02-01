@@ -1,0 +1,8 @@
+.el-dropdown-menu {
+  background-color: #fff !important;
+}
+
+.el-dropdown-menu li:hover {
+  background-color: #E4F6E9 !important;
+  color: black !important;
+}
