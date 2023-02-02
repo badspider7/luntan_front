@@ -70,7 +70,7 @@ import Sidebar from "../components/SideBar.vue";
 import Header from "../components/Header.vue";
 export default {
   name: "Home",
-  components: { Sidebar ,Header},
+  components: { Sidebar, Header },
   data() {
     return {
       input: "",
@@ -189,14 +189,22 @@ export default {
   margin: 0 auto;
   .el-carousel {
     width: 600px;
+    margin-top: 33px;
     .el-carousel__item {
       width: 600px;
-      height: 300px;
+      height: 365px;
       img {
         width: 100%;
         height: 100%;
       }
     }
+  }
+  .body-content {
+    position: absolute;
+    top: 421px;
+    border-top: 1px solid #ddd;
+    width: 100%;
+    margin: 0 auto;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="container-body">
-    文章列表
+  <div class="ArticleListItem">
+    
   </div>
 </template>
 <script>
@@ -16,7 +16,5 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.container-body{
-  margin: 0 auto;
-}
+
 </style>

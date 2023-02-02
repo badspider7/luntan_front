@@ -11,7 +11,7 @@
         </router-link>
       </h1>
       <div class="hitokoto" v-show="isShowSlogan">
-        <span>{{ poem }}</span>
+        <span title="https://hitokoto.cn/">{{ poem }}</span>
       </div>
       <div class="Header-secondary">
         <ul class="Header-controls">
@@ -72,6 +72,7 @@
 <script>
 import { mapState } from "vuex";
 import { poetry } from "../api/user";
+import { removeItem } from "../utils/storage";
 import LoginAndRegister from "../views/LoginAndRegister.vue";
 export default {
   components: { LoginAndRegister },
@@ -82,21 +83,8 @@ export default {
       poem: "",
     };
   },
-  // watch: {
-  //   loginIs: {
-  //     immediate:true,
-  //     handler(newValue, oldValue) {
-  //       console.log('newValue:'+newValue,oldValue);
-  //     }
-  //   }
-  // },
-  // provide() {
-  //   return {
-  //     loginIs:this.loginIs
-  //   }
-  // },
   computed: {
-    ...mapState(['loginIs'])
+    ...mapState(["loginIs"]),
   },
   methods: {
     //登录注册
@@ -111,14 +99,15 @@ export default {
         this.$refs.dropdownBtn.classList.remove("btn-click");
       }
     },
-      //判断是否登录
+    //判断是否登录
     isLogin() {
       // this.loginIs = document.cookie ? true : false;
-      this.$store.commit('setLoginIs',document.cookie ? true : false)
-      },
+      this.$store.commit("setLoginIs", document.cookie ? true : false);
+    },
     //退出登录
     exitLogin() {
-      this.$store.commit('setLoginIs',false)
+      this.$store.commit("setLoginIs", false);
+      removeItem("user");
       // this.loginIs = false;
     },
   },
@@ -127,13 +116,11 @@ export default {
     try {
       const { data } = await poetry();
       this.poem = data.data;
-      this.isLogin()
+      this.isLogin();
     } catch (err) {
       console.log(err);
     }
   },
-
-
 };
 </script>
 <style scoped lang="scss">
@@ -155,7 +142,7 @@ export default {
   border-bottom: 1px solid;
   border-bottom-color: #e4f6e9;
   z-index: 99;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
   .Header-secondary {
     margin-left: 155px;
     position: relative;

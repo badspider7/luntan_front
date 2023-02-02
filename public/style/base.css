@@ -6,3 +6,7 @@
   background-color: #E4F6E9 !important;
   color: black !important;
 }
+
+.el-carousel__indicators--horizontal {
+  top: 300px;
+}
