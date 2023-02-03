@@ -192,7 +192,7 @@ export default {
     margin-top: 33px;
     .el-carousel__item {
       width: 600px;
-      height: 365px;
+      height: 335px;
       img {
         width: 100%;
         height: 100%;
@@ -202,7 +202,6 @@ export default {
   .body-content {
     position: absolute;
     top: 421px;
-    border-top: 1px solid #ddd;
     width: 100%;
     margin: 0 auto;
   }
