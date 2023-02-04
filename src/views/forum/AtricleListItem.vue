@@ -10,7 +10,7 @@
         <div class="item-body">
           <div class="article-contain">
             <div class="item-title">
-              <router-link to="/">{{ article.data.title }}</router-link>
+              <router-link to="/post/1">{{ article.data.title }}</router-link>
             </div>
             <div class="item-username">
               <router-link to="/user">{{ article.data.author.username }}</router-link

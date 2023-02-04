@@ -1,7 +1,7 @@
 <template>
   <div class="container-body">
     <div class="article-list">
-      <DataList :dataSource="articleListInfo" @loadData="loadArticle">
+      <DataList :loading="loading" :dataSource="articleListInfo" @loadData="loadArticle">
         <template slot-scope="data">
           <ArticleListItem :article="data"></ArticleListItem>
         </template>
@@ -19,6 +19,7 @@ export default {
   data() {
     return {
       articleListInfo: {},
+      loading: false
     };
   },
   components: { ArticleListItem,DataList },
@@ -34,10 +35,12 @@ export default {
     },
     //文章分页功能
     async loadArticle() {
+      this.loading = true
       let params = {
         page: this.articleListInfo.pageNumber
       }
-      let {data} = await getArticleLists(params)
+      let { data } = await getArticleLists(params)
+      this.loading = false
       if (!data) return 
       this.articleListInfo= data.data
     }

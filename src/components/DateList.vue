@@ -1,7 +1,15 @@
 <template>
   <div>
+    <div
+      v-if="!loading && dataSource.list != null && dataSource.list.length == 0"
+    >
+      数据为空
+    </div>
+    <div class="skeleton" v-if="loading">
+      <el-skeleton :rows="6" animated></el-skeleton>
+    </div>
     <div v-for="item in dataSource.list" :key="item.id">
-      <slot :data="item"></slot>
+      <slot :data="item" v-if="!loading"></slot>
     </div>
     <div class="pagination">
       <!-- 分页按钮 -->
@@ -25,6 +33,9 @@ export default {
     dataSource: {
       type: Object,
     },
+    loading: {
+      type: Boolean,
+    },
   },
   methods: {
     handlePageNoChange(pageNo) {
@@ -36,7 +47,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .pagination {
-  display: flex;
-  justify-content: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
 }
 </style>
