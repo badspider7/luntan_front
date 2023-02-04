@@ -6,10 +6,11 @@ import request from '../utils/request'
 /**
  * 获取文章列表
  */
-export const getArticleLists = () => {
+export const getArticleLists = (data) => {
     return request({
         method: "get",
-        url:"/articles"
+        url: "/articles",
+        params:data
     })
 }
 

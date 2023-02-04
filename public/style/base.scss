@@ -9,3 +9,13 @@
   .el-carousel__indicators--horizontal{
     top: 300px;
   }
+
+
+  .el-pagination.is-background .el-pager li:not(.disabled).active{
+    background-color: green !important;
+}
+// .el-page{
+//   li:hover{
+//     color: #fff;
+//   }
+// }
