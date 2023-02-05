@@ -1,20 +1,16 @@
 <template>
   <div>
-    文章详情
+    <Header></Header>
   </div>
 </template>
 <script>
+import Header from "../../components/Header.vue";
 export default {
+  components: { Header },
   data() {
-    return {
-
-    }
+    return {};
   },
-  methods:{
-
-  },
-}
+  methods: {},
+};
 </script>
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

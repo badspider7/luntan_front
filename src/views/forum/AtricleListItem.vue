@@ -1,9 +1,9 @@
 <template>
   <div class="ArticleListItem">
-    <div class="discussionListItem">
+    <router-link to="/post/1" class="discussionListItem">
       <div class="discussionItem-content">
         <div class="item-avatar">
-          <router-link to="/">
+          <router-link to="/profile/2">
             <el-avatar :src="article.data.author.avatar_url"></el-avatar
           ></router-link>
         </div>
@@ -13,16 +13,16 @@
               <router-link to="/post/1">{{ article.data.title }}</router-link>
             </div>
             <div class="item-username">
-              <router-link to="/user">{{ article.data.author.username }}</router-link
+              <router-link to="/profile/2">{{ article.data.author.username }}</router-link
               >&nbsp;发布于&nbsp;21&nbsp;天前
             </div>
           </div>
           <div class="article-tag">
-            <router-link to="/">{{ article.data.category.name }}</router-link>
+            <router-link to="/tag/3">{{ article.data.category.name }}</router-link>
           </div>
         </div>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 <script>
@@ -46,6 +46,9 @@ export default {
   a{
     color: #7c7c7c;
   }
+  a:hover{
+        color:#a75050
+      }
   
   &:hover {
     background-color: #f2fbf4;
@@ -65,9 +68,6 @@ export default {
       bottom: 0px;
       left: 55px;
       font-size: 13px;
-      a {
-        color: #a75050;
-      }
     }
     .article-tag {
       position: absolute;

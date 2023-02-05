@@ -10,10 +10,6 @@ const routes = [{
       path: '/',
       name: "ArticleList",
       component: () => import('../views/forum/ArticleList.vue')
-    }, {
-      path: '/post/:articleId',
-      name: "articleDetail",
-      component: () => import('../views/forum/ArticleDetail.vue')
     }]
   }, {
     name: "chatRoom",
@@ -32,6 +28,11 @@ const routes = [{
   {
     path: "/aboutme",
     component: () => import("../views/AboutMe.vue")
+  },
+  {
+    path: '/post/:articleId',
+    name: "articleDetail",
+    component: () => import('../views/forum/ArticleDetail.vue')
   }
 
 ]
