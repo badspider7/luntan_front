@@ -62,7 +62,7 @@ export default {
     },
     formData: {
       type: Object,
-    }
+    },
   },
   data() {
     return {};
@@ -86,6 +86,35 @@ export default {
             password: this.formData.password,
           });
           console.log(data);
+          //--------注册成功进行登录------
+          const res = await login({
+            email: data.data.email,
+            password: this.formData.password,
+          });
+          //将后端返回的token等用户信息放到vueX容器中
+          this.$store.commit("setUser", {
+            token: res.data.authorization.token,
+            username: res.data.username,
+            id: res.data.id,
+            email: res.data.email,
+            avatar_url: res.data.avatar_url,
+          });
+          //记住我  保存cookie信息
+
+          let loginInfo = {
+            email: this.formData.email,
+            password: this.formData.password,
+            rememberMe: true,
+          };
+          loginInfo = JSON.stringify(loginInfo);
+          let d = new Date();
+          d.setTime(d.getTime() + 7 * 24 * 60 * 60 * 1000);
+          let expires = "expires=" + d.toGMTString();
+          document.cookie = `loginInfo=${loginInfo};expires = ${expires}`;
+          this.close();
+          //不能改props的数据
+          this.$store.commit("setLoginIs", true);
+
           this.$message({
             message: "账号注册成功",
             type: "success",
@@ -119,17 +148,18 @@ export default {
             let loginInfo = {
               email: this.formData.email,
               password: this.formData.password,
-              rememberMe:this.formData.rememberMe
+              rememberMe: this.formData.rememberMe,
             };
-            loginInfo = JSON.stringify(loginInfo)
+            loginInfo = JSON.stringify(loginInfo);
             var d = new Date();
             d.setTime(d.getTime() + 7 * 24 * 60 * 60 * 1000);
             var expires = "expires=" + d.toGMTString();
             document.cookie = `loginInfo=${loginInfo};expires = ${expires}`;
           } else {
-            document.cookie = "loginInfo=;expires=Thu, 01 Jan 1970 00:00:00 GMT"
+            document.cookie =
+              "loginInfo=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
           }
-          this.close()
+          this.close();
 
           this.$message({
             message: "登录成功",
@@ -137,7 +167,7 @@ export default {
             duration: 1500,
           });
           //不能改props的数据
-          this.$store.commit('setLoginIs',true)
+          this.$store.commit("setLoginIs", true);
         } catch (err) {
           this.$message({
             message: `登录失败,${err.response.data.msg}`,

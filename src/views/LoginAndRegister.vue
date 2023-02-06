@@ -144,7 +144,7 @@ export default {
       }
       this.$nextTick(() => {
         this.$refs.formDataRef.resetFields();
-
+        this.formData = {}
         //登录 从cookie中拿到数据 
         if (this.opType == 1) {
           const cookieLoginInfo = document.cookie

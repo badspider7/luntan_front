@@ -8,8 +8,8 @@ const routes = [{
     component: () => import('../views/Home.vue'),
     children: [{
       path: '/',
-      name: "ArticleList",
-      component: () => import('../views/forum/ArticleList.vue')
+      name: "QuestionList",
+      component: () => import('../views/forum/QuestionList.vue')
     }]
   }, {
     name: "chatRoom",
@@ -30,9 +30,9 @@ const routes = [{
     component: () => import("../views/AboutMe.vue")
   },
   {
-    path: '/post/:articleId',
-    name: "articleDetail",
-    component: () => import('../views/forum/ArticleDetail.vue')
+    path: '/:questionId',
+    name: "QuestionDetail",
+    component: () => import('../views/forum/QuestionsDetail.vue')
   }
 
 ]

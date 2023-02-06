@@ -46,7 +46,7 @@
             <el-dropdown trigger="click" @visible-change="changeStyle">
               <button class="el-dropdown-link" ref="dropdownBtn">
                 <el-avatar :src="$store.state.user.avatar_url"></el-avatar>
-                <span class="username">Badspider</span>
+                <span class="username">{{ $store.state.user.username }}</span>
               </button>
 
               <el-dropdown-menu class="dropdown-menu" slot="dropdown">

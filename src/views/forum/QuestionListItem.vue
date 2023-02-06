@@ -4,21 +4,21 @@
       <div class="discussionItem-content">
         <div class="item-avatar">
           <router-link to="/profile/2">
-            <el-avatar :src="article.data.author.avatar_url"></el-avatar
+            <el-avatar :src="article.data.questioner.avatar_url"></el-avatar
           ></router-link>
         </div>
         <div class="item-body">
           <div class="article-contain">
             <div class="item-title">
-              <router-link to="/post/1">{{ article.data.title }}</router-link>
+              <router-link :to="`${article.data._id}`">{{ article.data.title }}</router-link>
             </div>
             <div class="item-username">
-              <router-link to="/profile/2">{{ article.data.author.username }}</router-link
+              <router-link to="/profile/2">{{ article.data.questioner.username }}</router-link
               >&nbsp;发布于&nbsp;21&nbsp;天前
             </div>
           </div>
           <div class="article-tag">
-            <router-link to="/tag/3">{{ article.data.category.name }}</router-link>
+            <router-link to="/tag/3">{{ article.data.topics[0]? article.data.topics[0].name:''}}</router-link>
           </div>
         </div>
       </div>
