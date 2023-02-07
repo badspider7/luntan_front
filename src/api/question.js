@@ -24,3 +24,13 @@ export const getQuestion = (data) => {
         
     })
 }
+
+/**
+ * 获取答案列表
+ */
+export const getAnswer = data => {
+    return request({
+        method: "get",
+        url:"/questions/"+data+"/answers"
+    })
+}
