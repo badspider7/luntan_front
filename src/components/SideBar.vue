@@ -3,7 +3,7 @@
     <nav class="sideNav">
       <ul>
         <li class="item-navDiscussion">
-          <el-button type="primary" icon="el-icon-edit-outline"
+          <el-button type="primary" icon="el-icon-edit-outline" @click="createQuestion"
             >提问题</el-button
           >
         </li>
@@ -68,7 +68,11 @@ export default {
   },
   mounted() {},
   computed: {},
-  methods: {},
+  methods: {
+    createQuestion() {
+      this.$router.push({name:"createQuestion"})
+    }
+  },
 };
 </script>
 <style scoped lang="scss">

@@ -2,15 +2,17 @@
  * 文章相关请求模块
  */
 import request from '../utils/request'
+import { getItem } from '../utils/storage'
 
 /**
  * 获取文章列表
  */
+const user = getItem('user')
 export const getArticleLists = (data) => {
     return request({
         method: "get",
         url: "/articles",
-        params:data
+        params: data,
     })
 }
 
@@ -18,6 +20,11 @@ export const getArticleLists = (data) => {
  * 创建文章
  */
 
-export const createArticle = () => {
-    
+export const createArticle = (data) => {
+    return request({
+        method: "post",
+        url: "/articles",
+        data,
+        headers: { 'Authorization': user.token }
+    })
 }

@@ -18,7 +18,6 @@
           </div>
         </div>
         <div class="content" v-if="questionInfo.questioner">
-          <nav class="sideBar-right"></nav>
           <div class="question-discussion">
             <div class="post">
               <article class="post-item">
@@ -32,7 +31,7 @@
                       </router-link>
                     </li>
                     <li class="item-user">
-                      <router-link to="/user/id">
+                      <router-link to="/user/id" class="user-id">
                         <span>{{ questionInfo.questioner.username }}</span>
                       </router-link>
                     </li>
@@ -46,33 +45,18 @@
                   v-html="`${questionInfo.description}`"
                 ></div>
               </article>
-              <article class="post-item" v-for="item in answerInfo" :key="item._id">
-                <header>
-                  <ul>
-                    <li class="item-userImg">
-                      <router-link class="questioner-avatar" to="/user/id">
-                        <el-avatar
-                          :src="item.answerer.avatar_url"
-                        ></el-avatar>
-                      </router-link>
-                    </li>
-                    <li class="item-user">
-                      <router-link to="/user/id">
-                        <span>{{ item.answerer.username }}</span>
-                      </router-link>
-                    </li>
-                    <li class="post-time">
-                      <span>{{ item.createdAt.split("T")[0] }}</span>
-                    </li>
-                  </ul>
-                </header>
-                <div
-                  class="post-body"
-                  v-html="`${item.content}`"
-                ></div>
-              </article>
+              <PostDetail
+                v-for="item in answerInfo"
+                :key="item._id"
+                :answerInfo="item"
+                :questionInfo="questionInfo"
+              ></PostDetail>
             </div>
           </div>
+          <nav class="sideBar-right">
+            <el-button type="success" class="icon el-icon-message">回复问题</el-button>
+            <el-button type="success" class="icon el-icon-thumb">关注作者</el-button>
+          </nav>
         </div>
       </div>
     </main>
@@ -81,8 +65,9 @@
 <script>
 import { getQuestion, getAnswer } from "../../api/question";
 import Header from "../../components/Header.vue";
+import PostDetail from "./PostDetail.vue";
 export default {
-  components: { Header },
+  components: { Header, PostDetail },
   data() {
     return {
       questionInfo: {},
@@ -102,9 +87,12 @@ export default {
     },
   },
   mounted() {
+    //很奇怪的一个点   this.$router.params.questionId 拿不到，下面这种缺拿得到
+    // console.log(this.$router.currentRoute.params.questionId);
     this.getQuestionDetail(this.$route.path);
-    this.getAnswerList(this.$router.path);
+    this.getAnswerList(this.$router.currentRoute.params.questionId);
   },
+
   updated() {
     // let time = this.questionInfo.createdAt.split('T')[0] + '-' + this.questionInfo.createdAt.split('T')[1].split(':')[0] * 1 + 8 + ":" + this.questionInfo.createdAt.split('T')[1].split(':')[1]
     // console.log(time);
@@ -142,6 +130,10 @@ export default {
       }
     }
     .content {
+      display: grid;
+      grid-gap: 75px;
+      grid-template-columns: 1fr 150px;
+      grid-template-areas: "stream nav";
       width: 1100px;
       margin: 0 auto;
       .question-discussion {
@@ -167,16 +159,19 @@ export default {
             .item-user {
               font-size: 14px;
               font-weight: bold;
-              &::after {
-                content: "楼主";
-                padding-left: 10px;
-                padding-right: 10px;
-                color: rgb(255, 255, 255);
-                font-size: 12px;
-                margin-left: 14px;
-                background: rgb(240, 93, 29);
-                border-radius: 4px;
+              .user-id {
+                &::after {
+                  content: "楼主";
+                  padding-left: 10px;
+                  padding-right: 10px;
+                  color: rgb(255, 255, 255);
+                  font-size: 12px;
+                  margin-left: 14px;
+                  background: rgb(240, 93, 29);
+                  border-radius: 4px;
+                }
               }
+
               a:hover {
                 text-decoration: underline;
               }
@@ -191,6 +186,21 @@ export default {
             left: 100px;
             top: -51px;
             max-width: 55vw;
+          }
+        }
+      }
+      .sideBar-right{
+        position: sticky;
+        top: 60px;
+        height: 450px;
+        margin-top: 10px;
+        .el-button{
+          background-color: #18b965;
+          margin-top: 20px;
+          margin-left: 0px;
+          &::before{
+            margin-right: 10px;
+            font-size: 18px;
           }
         }
       }

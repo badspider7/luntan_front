@@ -11,7 +11,13 @@ const routes = [{
       name: "QuestionList",
       component: () => import('../views/forum/QuestionList.vue')
     }]
-  }, {
+},
+  {
+    name: "createQuestion",
+    path: "/post",
+    component: ()=> import('../views/forum/CreatePost.vue')
+},
+  {
     name: "chatRoom",
     path: "/chatRoom",
     component: () => import("../views/ChatRoom.vue")

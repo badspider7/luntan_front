@@ -1,6 +1,6 @@
 <template>
   <div class="ArticleListItem">
-    <router-link to="/post/1" class="discussionListItem">
+    <router-link :to="`${article.data._id}`" class="discussionListItem">
       <div class="discussionItem-content">
         <div class="item-avatar">
           <router-link to="/profile/2">

@@ -31,6 +31,17 @@ export const getQuestion = (data) => {
 export const getAnswer = data => {
     return request({
         method: "get",
-        url:"/questions/"+data+"/answers"
+        url:"/questions/"+data+"/answerlist"
+    })
+}
+
+/**
+ * 回复问题(创建答案)
+ */
+export const createAnswer = data => {
+    return request({
+        method: "post",
+        url: "/questions/:questionId/answers",
+        data
     })
 }
