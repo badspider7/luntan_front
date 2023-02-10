@@ -11,7 +11,7 @@
         </router-link>
       </h1>
       <div class="hitokoto" v-show="isShowSlogan">
-        <span title="https://hitokoto.cn/">{{ poem }}</span>
+        <span title="https://hitokoto.cn/">{{ title ? title : poem }}</span>
       </div>
       <div class="Header-secondary">
         <ul class="Header-controls">
@@ -76,6 +76,7 @@ import { removeItem } from "../utils/storage";
 import LoginAndRegister from "../views/LoginAndRegister.vue";
 export default {
   components: { LoginAndRegister },
+  props: ["title"],
   data() {
     return {
       input: "",

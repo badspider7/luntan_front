@@ -1,14 +1,16 @@
 <template>
   <div class="Blog">
-    Blog
+    <Header :title="title"></Header>
   </div>
 </template>
 <script>
+import Header from '../components/Header.vue'
 export default {
-    name: "blog",
+  name: "blog",
+    components:{Header},
   data() {
     return {
-
+      title:"博客"
     }
   },
   mounted(){

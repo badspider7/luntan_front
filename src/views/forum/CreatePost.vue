@@ -1,24 +1,24 @@
 <template>
   <div>
-    <Header></Header>
+    <Header :title="title"></Header>
     <div class="post-title">
       <input
         type="text"
         id="title"
         placeholder="请输入标题(最多30个字)"
         v-model="postTitle"
+        maxlength="30"
       />
-      <button @click="publishPost">发布</button>
+      <el-button @click="open">发布</el-button>
     </div>
-    <div id="vditor">
-    </div>
+    <div id="vditor"></div>
   </div>
 </template>
 <script>
 import Header from "../../components/Header";
 import Vditor from "vditor";
 // import postConfig from "./postConfig";
-import {createArticle} from '../../api/article'
+import { createArticle } from "../../api/article";
 export default {
   components: { Header },
   data() {
@@ -26,21 +26,54 @@ export default {
       postTitle: "",
       contentEditor: "",
       contentValue: "",
+      title: "创建文章",
     };
   },
   methods: {
     getEditValue() {
       return this.contentEditor.getValue();
-      },
-      async publishPost() {
-          const res = await createArticle({
-              title: this.postTitle,
-              content: this.getEditValue(),
-              status: "published",
-              category: "63dcb98f2b09a0ab96f34de2"
-          },'user')
+    },
+    async publishPost() {
+      try {
+        const res = await createArticle(
+          {
+            title: this.postTitle,
+            content: this.getEditValue(),
+            status: "published",
+            category: "63dcb98f2b09a0ab96f34de2",
+          },
+          "user"
+        );
         console.log(res);
+        this.$message({
+          message: "文章发表成功",
+          type: "success",
+          duration: 1500,
+        });
+      } catch (err) {
+        this.$message({
+          message: err.response.data.msg,
+          type: "error",
+          duration: 1500,
+        });
       }
+    },
+    open() {
+      this.$confirm("发表文章, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.publishPost();
+        })
+        .catch(() => {
+          this.$message({
+            type: "success",
+            message: "已取消发表",
+          });
+        });
+    },
   },
   mounted() {
     this.contentEditor = new Vditor("vditor", {
@@ -123,6 +156,12 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+// .hitokoto[data-v-61dd7a3d] {
+//   font-size: 20px;
+//   position: absolute;
+//   left: 40%;
+//   top: 25%;
+// }
 .post-title {
   position: relative;
   top: 64px;
@@ -146,26 +185,26 @@ export default {
       border-color: #61cb6aee;
     }
   }
-  button{
-        position: absolute;
-        right: 20px;
-        height: 35px;
-        width: 60px;
-        margin-top: 10px;
-        background-color: rgb(220, 165, 63);
-        border-radius: 4px;
-        outline: none;
-        border: 0;
-        color: #fff;
-        &:hover{
-            cursor: pointer;
-            background-color: orange;
-        }
+  button {
+    position: absolute;
+    right: 20px;
+    height: 35px;
+    width: 60px;
+    margin-top: 10px;
+    background-color: rgb(220, 165, 63);
+    border-radius: 4px;
+    outline: none;
+    border: 0;
+    color: #fff;
+    &:hover {
+      cursor: pointer;
+      background-color: orange;
     }
+  }
 }
 #vditor {
   position: relative;
   top: 64px;
-margin: 0 auto;
+  margin: 0 auto;
 }
 </style>
