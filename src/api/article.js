@@ -7,7 +7,7 @@ import { getItem } from '../utils/storage'
 /**
  * 获取文章列表
  */
-const user = getItem('user')
+
 export const getArticleLists = (data) => {
     return request({
         method: "get",
@@ -25,6 +25,6 @@ export const createArticle = (data) => {
         method: "post",
         url: "/articles",
         data,
-        headers: { 'Authorization': user.token }
+        headers: { 'Authorization': getItem('user').token }
     })
 }

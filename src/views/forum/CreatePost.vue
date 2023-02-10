@@ -50,6 +50,11 @@ export default {
           type: "success",
           duration: 1500,
         });
+        //清空输入框
+        this.postTitle = '';
+        this.contentEditor.setValue('');
+        //跳转到博客页面
+        this.$router.push({"name":"Blog"})
       } catch (err) {
         this.$message({
           message: err.response.data.msg,
