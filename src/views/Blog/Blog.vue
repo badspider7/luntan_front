@@ -9,9 +9,9 @@
   </div>
 </template>
 <script>
-import Header from "../components/Header.vue";
-import { getArticleLists } from "../api/article";
-import DateList from '../components/DateList.vue'
+import Header from "../../components/Header.vue";
+import { getArticleLists } from "../../api/article";
+import DateList from '../../components/DateList.vue'
 import BlogListItem from './BlogListItem.vue'
 export default {
   name: "blog",
