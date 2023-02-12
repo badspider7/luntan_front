@@ -28,3 +28,13 @@ export const createArticle = (data) => {
         headers: { 'Authorization': getItem('user').token }
     })
 }
+
+/**
+ * 获取指定文章
+ */
+export const getArticle = data => {
+    return request({
+        method: "get",
+        url:"/articles/"+data
+    })
+}

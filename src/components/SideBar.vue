@@ -13,7 +13,7 @@
                 <li class="item-tags">
                 <router-link to="/" >
                   <i class="el-icon-menu"></i>
-                  <span>全部标签</span>
+                  <span>文章分类</span>
                 </router-link>
               </li>
               <li class="item-blogs">
@@ -30,7 +30,7 @@
                 </router-link>
               </li>
               <li class="item-collecting">
-                <router-link to="/collecting">
+                <router-link to="/collections">
                   <i class="el-icon-coin"></i>
                   <span>收藏</span>
                 </router-link>
@@ -38,7 +38,7 @@
               <li class="item-front">
                 <a href="#">
                   <i class="el-icon-brush"></i>
-                  <span>前端</span>
+                  <span>话题</span>
                 </a>
               </li>
               <li class="item-backEnd">
@@ -50,7 +50,7 @@
               <li class="item-others">
                 <a href="#">
                   <i class="el-icon-toilet-paper"></i>
-                  <span>其他</span>
+                  <span>前端</span>
                 </a>
               </li>
             </ul>
@@ -77,9 +77,11 @@ export default {
 </script>
 <style scoped lang="scss">
 .SideBar {
-  position: absolute;
-  left: 180px;
-  top: 80px;
+  
+  // position: absolute;
+  // left: 180px;
+  // top: 80px;
+  margin-top: 30px;
   .sideNav {
     .item-navDiscussion {
       width: 190px;

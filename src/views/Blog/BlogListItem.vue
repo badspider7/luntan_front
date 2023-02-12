@@ -16,12 +16,11 @@
         <div class="article-btm">
           <!-- <span class="post-time">{{ article.updatedAt }}</span> -->
           <span class="post-time">2023年3月12日 </span>
-          <router-link to="/"
-            ><i class="el-icon-paperclip"></i>
+          <router-link to="/"><i class="el-icon-paperclip"></i>
             <span class="post-tag">{{
               article.category.name
-            }}</span></router-link
-          >
+            }}</span></router-link>
+            <router-link to="/" class="article-username">作者:{{ article.author.username }}</router-link>
         </div>
       </article>
     </div>
@@ -78,6 +77,13 @@ export default {
         padding-top: 8px;
         .post-time{
             margin-right: 10px;
+        }
+        .article-username{
+          margin-left: 2rem;
+          &:hover{
+            text-decoration: underline;
+            vertical-align: middle;
+          }
         }
       }
     }

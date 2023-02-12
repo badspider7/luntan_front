@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-    name:"followin",
+    name:"following",
   data() {
     return {
 

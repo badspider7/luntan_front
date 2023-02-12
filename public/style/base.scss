@@ -14,6 +14,29 @@
   .el-pagination.is-background .el-pager li:not(.disabled).active{
     background-color: green !important;
 }
+
+.main .container .board .board-container[data-v-2172013c] {
+  a{
+    color: #2da56c;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+}
+//icon 图标样式
+.icon {
+  width: 1em; height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+body{
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+:root{
+  --body-bg-color:#fff
+}
 // .el-page{
 //   li:hover{
 //     color: #fff;

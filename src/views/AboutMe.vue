@@ -1,7 +1,7 @@
 <template>
   <div class="AboutMe">
     <Header></Header>
-    xx
+    aboutme
   </div>
 </template>
 <script>

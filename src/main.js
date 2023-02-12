@@ -8,6 +8,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 //全局方法
 import Verify from './utils/validator'
 Vue.config.productionTip = false
+//注册全局组件
+import Footer from './components/Footer.vue'
+Vue.component("Footer",Footer)
 
 Vue.prototype.$Verify = Verify
 Vue.use(ElementUI)

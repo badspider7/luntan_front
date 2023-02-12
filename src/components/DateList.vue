@@ -8,7 +8,7 @@
     <div class="skeleton" v-if="loading">
       <el-skeleton :rows="6" animated></el-skeleton>
     </div>
-    <div v-for="item in dataSource.list" :key="item.id">
+    <div v-for="item in dataSource.list" :key="item._id">
       <slot :data="item" v-if="!loading"></slot>
     </div>
     <div class="pagination">
@@ -47,9 +47,12 @@ export default {
 </script>
 <style scoped lang="scss">
 .pagination {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+  // position: absolute;
+  // left: 50%;
+  // transform: translateX(-50%);
+  // z-index: 10;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
 }
 </style>

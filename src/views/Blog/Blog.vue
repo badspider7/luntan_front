@@ -6,6 +6,7 @@
           <BlogListItem :article="data.data"></BlogListItem>
         </template>
     </DateList>
+    <Footer></Footer>
   </div>
 </template>
 <script>
@@ -13,6 +14,7 @@ import Header from "../../components/Header.vue";
 import { getArticleLists } from "../../api/article";
 import DateList from '../../components/DateList.vue'
 import BlogListItem from './BlogListItem.vue'
+
 export default {
   name: "blog",
   components: { Header,DateList,BlogListItem },
@@ -38,7 +40,7 @@ export default {
       let params = {
         page: this.articleList.pageNumber,
       };
-      let { data } = await this.getArticleList(params);
+      let { data } = await getArticleLists(params);
       this.loading = false;
       if (!data) return;
       this.articleList = data.data;
