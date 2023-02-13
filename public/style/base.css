@@ -1,3 +1,11 @@
+:root {
+  --body-bg-color: #fff;
+}
+
+body {
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
 .el-dropdown-menu {
   background-color: #fff !important;
 }
@@ -31,10 +39,6 @@
   overflow: hidden;
 }
 
-body {
-  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-}
-
-:root {
-  --body-bg-color: #fff;
+.question-detail .question-body .content .post .post-item .post-body[data-v-2b8b2d74] img {
+  width: 45vw;
 }

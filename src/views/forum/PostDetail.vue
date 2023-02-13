@@ -43,6 +43,9 @@ export default {
 <style scoped lang="scss">
 .post-item {
   border-bottom: 1px solid #e4f6e9;
+  &:last-child {
+          border-bottom: none;
+        }
   header {
     padding: 20px;
   }

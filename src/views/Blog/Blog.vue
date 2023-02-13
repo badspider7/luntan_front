@@ -55,4 +55,7 @@ export default {
   width: 1100px;
   margin: 0 auto;
 }
+#footer{
+  margin-top: 120px;
+}
 </style>

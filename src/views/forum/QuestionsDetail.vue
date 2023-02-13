@@ -6,7 +6,10 @@
         <div class="title-wrap">
           <div class="title">
             <ul class="container-item">
-              <li>
+              <li class="topics">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-shengqian"></use>
+                </svg>
                 <span>{{
                   questionInfo.topics && questionInfo.topics[0].name
                 }}</span>
@@ -21,6 +24,7 @@
           <div class="question-discussion">
             <div class="post">
               <article class="post-item">
+                <!-- 楼主 -->
                 <header>
                   <ul>
                     <li class="item-userImg">
@@ -40,11 +44,13 @@
                     </li>
                   </ul>
                 </header>
+
                 <div
                   class="post-body"
                   v-html="`${questionInfo.description}`"
                 ></div>
               </article>
+              <!-- 回答问题的人 -->
               <PostDetail
                 v-for="item in answerInfo"
                 :key="item._id"
@@ -54,16 +60,28 @@
             </div>
           </div>
           <nav class="sideBar-right">
-            <el-button type="success" class="icon el-icon-message">回复问题</el-button>
-            <el-button type="success" class="icon el-icon-thumb">关注作者</el-button>
+            <el-button type="success" class="icon el-icon-message"
+              >回复问题</el-button
+            >
+            <el-button
+              type="success"
+              @click="followingAuthor"
+              >
+              <svg class="icon" >
+                <use xlink:href="#icon-jiaguanzhuhuati"></use>
+              </svg>
+              关注作者
+              </el-button>
           </nav>
         </div>
       </div>
     </main>
+    <Footer></Footer>
   </div>
 </template>
 <script>
 import { getQuestion, getAnswer } from "../../api/question";
+import { following } from "../../api/user";
 import Header from "../../components/Header.vue";
 import PostDetail from "./PostDetail.vue";
 export default {
@@ -77,13 +95,38 @@ export default {
   methods: {
     //获取问题的详细信息
     async getQuestionDetail(questionId) {
-      let { data } = await getQuestion(questionId);
-      this.questionInfo = data.data;
+      try {
+        let { data } = await getQuestion(questionId);
+        this.questionInfo = data.data;
+      } catch (err) {
+        console.log(err);
+      }
     },
     //获取该问题的答案列表
     async getAnswerList(questionId) {
-      let { data } = await getAnswer(questionId);
-      this.answerInfo = data.data;
+      try {
+        let { data } = await getAnswer(questionId);
+        this.answerInfo = data.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    //关注作者  token parmas: 作者id
+    async followingAuthor() {
+      try {
+        const { data } = await following(this.questionInfo.questioner._id);
+        this.$message({
+          type: "success",
+          message: "关注成功!",
+          duration: 1500,
+        });
+      } catch (err) {
+        this.$message({
+          type: "error",
+          message: err.response.data.msg,
+          duration: 1500,
+        });
+      }
     },
   },
   mounted() {
@@ -126,6 +169,11 @@ export default {
         align-items: center;
         li {
           margin-bottom: 20px;
+        }
+        .topics {
+          background-color: rgb(238, 225, 219);
+          padding: 7px;
+          border-radius: 6px;
         }
       }
     }
@@ -189,16 +237,18 @@ export default {
           }
         }
       }
-      .sideBar-right{
+      .sideBar-right {
         position: sticky;
         top: 60px;
         height: 450px;
         margin-top: 10px;
-        .el-button{
+        .el-button {
+          height: 47px;
+          width: 125px;
           background-color: #18b965;
           margin-top: 20px;
           margin-left: 0px;
-          &::before{
+          &::before {
             margin-right: 10px;
             font-size: 18px;
           }

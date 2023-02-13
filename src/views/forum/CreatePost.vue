@@ -12,6 +12,7 @@
       <el-button @click="open">发布</el-button>
     </div>
     <div id="vditor"></div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
@@ -207,8 +208,10 @@ export default {
   }
 }
 #vditor {
-  position: relative;
+  // position: relative;
+  
   top: 64px;
   margin: 0 auto;
+  margin-top: 64px;
 }
 </style>
