@@ -70,7 +70,8 @@
               <svg class="icon" >
                 <use xlink:href="#icon-jiaguanzhuhuati"></use>
               </svg>
-              关注作者
+              <span>关注作者</span>
+              <span v-if="isFollowing">取消关注</span>
               </el-button>
           </nav>
         </div>
@@ -81,15 +82,18 @@
 </template>
 <script>
 import { getQuestion, getAnswer } from "../../api/question";
-import { following } from "../../api/user";
+import { following,followingList } from "../../api/user";
 import Header from "../../components/Header.vue";
 import PostDetail from "./PostDetail.vue";
+import { getItem } from "../../utils/storage";
 export default {
   components: { Header, PostDetail },
   data() {
     return {
       questionInfo: {},
       answerInfo: {},
+      isFollowing: false,  //判断是否关注
+      id1:{}
     };
   },
   methods: {
@@ -128,12 +132,27 @@ export default {
         });
       }
     },
+
+    //获取关注列表,判断是否已经关注楼主
+    async getFollowingList(id) {
+      const { data } = await followingList(id)
+      
+       id1  = this.questionInfo.questioner
+      console.log(id1);
+      const res = data.data.following.find(following => following._id ==  this.questionInfo.questioner._id)
+      console.log(res);
+      }
+    //取消关注
   },
   mounted() {
     //很奇怪的一个点   this.$router.params.questionId 拿不到，下面这种缺拿得到
     // console.log(this.$router.currentRoute.params.questionId);
+    //拿到问题详情
     this.getQuestionDetail(this.$route.path);
+    //获取问题列表
     this.getAnswerList(this.$router.currentRoute.params.questionId);
+    //获取关注列表
+    this.getFollowingList(getItem("user").id)
   },
 
   updated() {
