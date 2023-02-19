@@ -3,7 +3,7 @@
     <el-container>
       <!-- 头部 -->
       <Header></Header>
-  
+
       <!-- 主体 -->
       <main>
         <!-- sidebar -->
@@ -21,6 +21,23 @@
       <!-- 底部 -->
       <Footer></Footer>
     </el-container>
+    <el-backtop :bottom="150" :right="100">
+      <div
+        style="
+           {
+            height: 100%;
+            width: 100%;
+            background-color: #f2f5f6;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            line-height: 40px;
+            color: #1989fa;
+          } "
+      >
+        <svg class="icon">
+          <use xlink:href="#icon-fanhuidingbu"></use>
+        </svg></div
+    ></el-backtop>
   </div>
 </template>
 

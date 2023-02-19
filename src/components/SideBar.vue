@@ -3,15 +3,27 @@
     <nav class="sideNav">
       <ul>
         <li class="item-navDiscussion">
-          <el-button type="primary" icon="el-icon-edit-outline" @click="createQuestion"
+          <el-select v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+          <!-- <el-button
+            type="primary"
+            icon="el-icon-edit-outline"
+            @click="createQuestion"
             >提问题</el-button
-          >
+          > -->
         </li>
         <li class="item-nav">
           <div class="item-count">
             <ul>
-                <li class="item-tags">
-                <router-link to="/" >
+              <li class="item-tags">
+                <router-link to="/">
                   <i class="el-icon-menu"></i>
                   <span>文章分类</span>
                 </router-link>
@@ -22,7 +34,7 @@
                   <span>博客</span>
                 </router-link>
               </li>
-              
+
               <li class="item-following">
                 <router-link to="/following">
                   <i class="el-icon-star-off"></i>
@@ -64,20 +76,31 @@
 export default {
   name: "SideBar",
   data() {
-    return {};
+    return {
+      value:'',
+      options: [
+        {
+          value: "选项1",
+          label:"提问题"
+        },
+        {
+          value: "选项2",
+          label:"写文章"
+        }
+      ]
+    };
   },
   mounted() {},
   computed: {},
   methods: {
     createQuestion() {
-      this.$router.push({name:"createQuestion"})
-    }
+      this.$router.push({ name: "createQuestion" });
+    },
   },
 };
 </script>
 <style scoped lang="scss">
 .SideBar {
-  
   // position: absolute;
   // left: 180px;
   // top: 80px;
@@ -104,8 +127,8 @@ export default {
           font-weight: bold;
           margin-bottom: 20px;
           color: #669974;
-          &:hover{
-            color: #00C860;
+          &:hover {
+            color: #00c860;
           }
           i {
             font-size: 15px;

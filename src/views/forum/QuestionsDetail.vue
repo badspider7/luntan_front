@@ -195,6 +195,7 @@ export default {
     this.getAnswerList(this.$router.currentRoute.params.questionId);
     //获取关注列表
     // this.getFollowingList(getItem("user").id)
+    
   },
 
   updated() {
