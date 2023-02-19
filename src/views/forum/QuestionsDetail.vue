@@ -63,16 +63,31 @@
             <el-button type="success" class="icon el-icon-message"
               >回复问题</el-button
             >
+
+            <!-- 关注作者 -->
             <el-button
+              v-if="!isFollowing"
               type="success"
               @click="followingAuthor"
-              >
-              <svg class="icon" >
+            >
+              <svg class="icon">
                 <use xlink:href="#icon-jiaguanzhuhuati"></use>
               </svg>
               <span>关注作者</span>
-              <span v-if="isFollowing">取消关注</span>
-              </el-button>
+            </el-button>
+
+            <!-- 取消关注 -->
+            <el-button
+              type="success"
+              @click="cancelFollow"
+              v-if="isFollowing"
+              class="error-btn"
+            >
+              <svg class="icon">
+                <use xlink:href="#icon-yiguanzhuhuati"></use>
+              </svg>
+              <span>取消关注</span>
+            </el-button>
           </nav>
         </div>
       </div>
@@ -82,7 +97,7 @@
 </template>
 <script>
 import { getQuestion, getAnswer } from "../../api/question";
-import { following,followingList } from "../../api/user";
+import { following, followingList,cancelFollowing } from "../../api/user";
 import Header from "../../components/Header.vue";
 import PostDetail from "./PostDetail.vue";
 import { getItem } from "../../utils/storage";
@@ -92,8 +107,9 @@ export default {
     return {
       questionInfo: {},
       answerInfo: {},
-      isFollowing: false,  //判断是否关注
-      id1:{}
+      isFollowing: false, //判断是否关注
+      //用户关注的信息
+      followingId: {},
     };
   },
   methods: {
@@ -115,7 +131,7 @@ export default {
         console.log(err);
       }
     },
-    //关注作者  token parmas: 作者id
+    //关注作者  token 
     async followingAuthor() {
       try {
         const { data } = await following(this.questionInfo.questioner._id);
@@ -124,6 +140,7 @@ export default {
           message: "关注成功!",
           duration: 1500,
         });
+        this.isFollowing = true
       } catch (err) {
         this.$message({
           type: "error",
@@ -132,16 +149,41 @@ export default {
         });
       }
     },
+    //  取消关注  parmas: 作者id 
+    async cancelFollow() {
+      try {
+        const { data } = await cancelFollowing(this.questionInfo.questioner._id);
+        this.$message({
+          type: "success",
+          message: "取消关注成功!",
+          duration: 1500,
+        });
+        this,this.isFollowing = false
+      } catch (err) {
+        this.$message({
+          type: "error",
+          message: err.response.data.msg,
+          duration: 1500,
+        });
+      }
+
+    },
 
     //获取关注列表,判断是否已经关注楼主
     async getFollowingList(id) {
-      const { data } = await followingList(id)
-      
-       id1  = this.questionInfo.questioner
-      console.log(id1);
-      const res = data.data.following.find(following => following._id ==  this.questionInfo.questioner._id)
-      console.log(res);
+      const { data } = await followingList(id);
+
+      this.followingId = this.questionInfo.questioner._id;
+      const res = data.data.following.find(
+        (following) => following._id == this.followingId
+      );
+      //如果已经关注
+      if (res) {
+        this.isFollowing = true;
+      } else {
+        this.isFollowing = false;
       }
+    },
     //取消关注
   },
   mounted() {
@@ -152,12 +194,12 @@ export default {
     //获取问题列表
     this.getAnswerList(this.$router.currentRoute.params.questionId);
     //获取关注列表
-    this.getFollowingList(getItem("user").id)
+    // this.getFollowingList(getItem("user").id)
   },
 
   updated() {
-    // let time = this.questionInfo.createdAt.split('T')[0] + '-' + this.questionInfo.createdAt.split('T')[1].split(':')[0] * 1 + 8 + ":" + this.questionInfo.createdAt.split('T')[1].split(':')[1]
-    // console.log(time);
+    //获取关注列表
+    this.getFollowingList(getItem("user").id);
   },
 };
 </script>
@@ -267,11 +309,22 @@ export default {
           background-color: #18b965;
           margin-top: 20px;
           margin-left: 0px;
+          .icon {
+            width: 1.3em;
+            height: 1.3em;
+            vertical-align: -0.4rem;
+            font-size: 18px;
+            margin-right: 10px;
+          }
           &::before {
             margin-right: 10px;
             font-size: 18px;
           }
         }
+        .error-btn {
+            background-color: var(--error-btn-color) !important;
+            border-color: var(--error-btn-color);
+          }
       }
     }
   }

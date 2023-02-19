@@ -1,40 +1,45 @@
-:root{
-  --body-bg-color:#fff
+:root {
+  --body-bg-color: #fff;
+  --error-btn-color: #d90c20
 }
 
 
-body{
+body {
   transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
 .el-dropdown-menu {
-    background-color: #fff !important;
-    li:hover{
-        background-color: #E4F6E9 !important;
-        color: black !important;
-    }
+  background-color: #fff !important;
+
+  li:hover {
+    background-color: #E4F6E9 !important;
+    color: black !important;
   }
+}
 
-  .el-carousel__indicators--horizontal{
-    top: 300px;
-  }
+.el-carousel__indicators--horizontal {
+  top: 300px;
+}
 
 
-  .el-pagination.is-background .el-pager li:not(.disabled).active{
-    background-color: green !important;
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: green !important;
 }
 
 .main .container .board .board-container[data-v-2172013c] {
-  a{
+  a {
     color: #2da56c;
-    &:hover{
+
+    &:hover {
       text-decoration: underline;
     }
   }
 }
+
 //icon 图标样式
 .icon {
-  width: 1em; height: 1em;
+  width: 1em;
+  height: 1em;
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
@@ -42,7 +47,7 @@ body{
 
 
 .question-detail .question-body .content .post .post-item .post-body[data-v-2b8b2d74] {
-  img{
+  img {
     width: 45vw;
   }
 }
