@@ -1,23 +1,25 @@
 <template>
   <div class="SideBar">
+    <div style="display: none">
+      <createQuestion></createQuestion>
+    </div>
     <nav class="sideNav">
       <ul>
         <li class="item-navDiscussion">
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-          <!-- <el-button
+          <el-button
             type="primary"
             icon="el-icon-edit-outline"
-            @click="createQuestion"
-            >提问题</el-button
-          > -->
+            @click="createArticle"
+            >创建文章</el-button
+          >
+        </li>
+        <li class="item-navDiscussion">
+          <el-button type="primary" @click="createQuestion">
+            <svg class="icon">
+              <use xlink:href="#icon-tubiaozhizuomoban-"></use>
+            </svg>
+            提问题
+          </el-button>
         </li>
         <li class="item-nav">
           <div class="item-count">
@@ -73,28 +75,61 @@
   </div>
 </template>
 <script>
+import createQuestion from "./createQuestion.vue";
 export default {
   name: "SideBar",
+  components: { createQuestion },
   data() {
     return {
-      value:'',
-      options: [
-        {
-          value: "选项1",
-          label:"提问题"
-        },
-        {
-          value: "选项2",
-          label:"写文章"
-        }
-      ]
+      questionRootHtml: {},
     };
   },
-  mounted() {},
+  created() {
+    //bug  debugger   提问题模块未完成
+    this.$nextTick(() => {
+      this.$on("getRootHTML", function (val) {
+        this.questionRootHtml = val;
+        console.log(val);
+      });
+    });
+  },
   computed: {},
   methods: {
-    createQuestion() {
+    createArticle() {
       this.$router.push({ name: "createQuestion" });
+    },
+    createQuestion() {
+      const h = this.$createElement;
+      this.$msgbox({
+        title: "提问题",
+        message: h("p", null, [
+          h("template", null, this.questionRootHtml), // 递归  子组件 dom 树
+        ]),
+        showCancelButton: true,
+        confirmButtonText: "提交",
+        cancelButtonText: "取消",
+        center: true,
+        // beforeClose: (action, instance, done) => {
+        //   if (action === "confirm") {
+        //     done()
+        //     // instance.confirmButtonLoading = true;
+        //     // instance.confirmButtonText = "执行中...";
+        //     // setTimeout(() => {
+        //     //   done();
+        //     //   setTimeout(() => {
+        //     //     instance.confirmButtonLoading = false;
+        //     //   }, 300);
+        //     // }, 3000);
+        //   } else {
+        //     done();
+        //   }
+        // },
+      }).then((action) => {
+        this.$message({
+          type: "info",
+          message: "action: " + action,
+        });
+      });
     },
   },
 };
@@ -116,6 +151,10 @@ export default {
         color: #fff;
         font-size: 13px;
         background-color: #07c160;
+        .icon {
+          font-size: 20px;
+          margin-left: -20px;
+        }
       }
     }
     .item-nav {

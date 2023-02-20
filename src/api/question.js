@@ -45,3 +45,15 @@ export const createAnswer = data => {
         data
     })
 }
+
+/**
+ * 创建问题
+ */
+export const createQuestion = data => {
+    return request({
+        method: "post",
+        url: "/questions",
+        params: data,
+        headers:{ 'Authorization': getItem('user').token }
+    })
+}
