@@ -10,7 +10,9 @@ import Verify from './utils/validator'
 Vue.config.productionTip = false
 //注册全局组件
 import Footer from './components/Footer.vue'
+import Header from './components/Header.vue'
 Vue.component("Footer",Footer)
+Vue.component("Header",Header)
 
 Vue.prototype.$Verify = Verify
 Vue.use(ElementUI)
