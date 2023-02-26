@@ -44,7 +44,18 @@ const routes = [{
   {
     name: "following",  //关注
     path: "/following",
-    component:() => import("../components/Following.vue")
+    component: () => import("../components/Following.vue"),
+    children: [
+      {
+        // name: "",
+        path: "/",
+        component:() => import("../components/FollowingList.vue")
+      }, {
+        name: "follower",
+        path: "/follower",
+        component:() => import("../components/FollowerList.vue")
+      }
+    ]
   }, {
     name: "collection", //收藏
     path: "/collections",

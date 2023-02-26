@@ -22,15 +22,34 @@
                 {{ userInfo.username }}
               </h3>
               <div class="slogn">
-                <span style="font-weight:800;margin-right: 20px;">个人简介</span>
+                <span style="font-weight: 800; margin-right: 20px"
+                  >个人简介</span
+                >
                 {{ userInfo.slogn }}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="followingList"></div>
+      <div class="followingList">
+        <div class="list-header">
+          <ul>
+            <li>
+              <router-link to="/following/" active-class="clickList"
+                >我关注的人</router-link
+              >
+            </li>
+            <li>
+              <router-link :to="{name:'follower'}" active-class="clickList"
+                >关注我的人</router-link
+              >
+            </li>
+          </ul>
+        </div>
+        <router-view :followingList="followingList"></router-view>
+      </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
@@ -62,12 +81,21 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+.noFollower {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  padding: 20px;
+}
 .following {
+  background-color: #f6f6f6;
   .following-container {
     max-width: 1000px;
     margin: 0 auto;
-    margin-top: 54px;
+    margin-top: 64px;
     .author {
+      background-color: var(--body-bg-color);
       .userCover {
         img {
           object-fit: cover;
@@ -94,15 +122,45 @@ export default {
             position: absolute;
             top: -25px;
             border-radius: 4px;
-            padding: 8px;
+            padding: 4px;
+            background-color: #fff;
             img {
               width: 168px;
               height: 168px;
             }
           }
         }
-        .userInfo-content{
+        .userInfo-content {
           margin-top: 15px;
+          .username {
+            margin-bottom: 1rem;
+          }
+        }
+      }
+    }
+    .followingList {
+      margin: 10px auto;
+      background-color: var(--body-bg-color);
+      .list-header {
+        margin: 0 30px;
+        border-top: 1px solid #e4f6e9;
+        border-bottom: 1px solid #e4f6e9;
+        .clickList {
+          font-weight: 600;
+        }
+        ul {
+          height: 50px;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-content: center;
+          li {
+            margin-right: 25px;
+            font-size: 15px;
+            :hover {
+              font-weight: 600;
+            }
+          }
         }
       }
     }
