@@ -54,6 +54,6 @@ export const createQuestion = data => {
         method: "post",
         url: "/questions",
         params: data,
-        headers:{ 'Authorization': getItem('user').token }
+        // headers:{ 'Authorization': getItem('user').token }
     })
 }

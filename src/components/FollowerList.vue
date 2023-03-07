@@ -22,16 +22,16 @@
           <span class="follower-tip">关注了你</span>
           <div class="slogn">个人简介： {{ follower.slogn }}</div>
         </div>
-        <div class="extra">
+        <div class="extra" ref="extra">
           <!-- 关注作者 -->
-          <!-- <div class="extra-body">
+          <div class="extra-body" v-if="!isFollowing" @click="getFollowing(follower)">
             <svg class="icon">
               <use xlink:href="#icon-jiaguanzhuhuati"></use>
             </svg>
             <span>关注</span>
-          </div> -->
+          </div>
           <!-- 取消关注 -->
-          <div class="extra-body deleteFollower">
+          <div class="extra-body deleteFollower" v-if="isFollowing" @click="getCancelFollowing(follower)">
             <svg class="icon">
               <use xlink:href="#icon-jiaguanzhuhuati"></use>
             </svg>
@@ -43,12 +43,13 @@
   </div>
 </template>
 <script>
-import { followerList } from "../api/user";
+import { followerList ,following, cancelFollowing} from "../api/user";
 import { getItem } from "../utils/storage";
 export default {
   data() {
     return {
       followerList: {},
+      isFollowing: false
     };
   },
   methods: {
@@ -60,6 +61,45 @@ export default {
         console.log(err);
       }
     },
+    //关注
+    async getFollowing(follower) {
+      try {
+        const { data } = await following(follower._id);
+        this.$message({
+          type: "success",
+          message: "关注成功!",
+          duration: 1500,
+        });
+        console.log(follower);
+        this.isFollowing = true
+      } catch (err) {
+        this.$message({
+          type: "error",
+          message: err.response.data.msg,
+          duration: 1500,
+        });
+      }
+    },
+    //取消关注
+    async getCancelFollowing(follwer) {
+      try {
+        const { data } = await cancelFollowing(follwer._id);
+        // console.log(this.$refs.extra);
+        // this.$refs.extra.getElementsByClassName.backgroundColor = "#ccc";
+        this.$message({
+          type: "success",
+          message: "取消关注成功!",
+          duration: 1500,
+        });
+        this.isFollowing = false
+      } catch (err) {
+        this.$message({
+          type: "error",
+          message: err.response.data.msg,
+          duration: 1500,
+        });
+      }
+    }
   },
   mounted() {
     this.getFollowerList();
@@ -75,6 +115,9 @@ export default {
     font-size: 18px;
     padding: 20px;
   }
+  // #FollowerList:nth-last-of-type(n){
+  //   color: red;
+  // }
   .List-item {
     padding: 16px 20px;
     .list-wrapper {
@@ -120,12 +163,14 @@ export default {
         cursor: pointer;
       }
       .extra-body {
+        // height: 100%;
         .icon{
           margin-right: 5px;
         }
       }
       .deleteFollower{
         font-size: 14px;
+        // background-color: #8590a6;
       }
     }
   }

@@ -50,8 +50,9 @@
               </button>
 
               <el-dropdown-menu class="dropdown-menu" slot="dropdown">
-                <el-dropdown-item icon="el-icon-user-solid"
-                  >个人主页</el-dropdown-item
+                <el-dropdown-item icon="el-icon-user-solid">
+                  <router-link to="/profile">个人主页</router-link>
+                  </el-dropdown-item
                 >
                 <el-dropdown-item icon="el-icon-s-tools">设置</el-dropdown-item>
                 <el-dropdown-item :divided="true" icon="el-icon-caret-right"
@@ -103,7 +104,7 @@ export default {
     //判断是否登录
     isLogin() {
       // this.loginIs = document.cookie ? true : false;
-      this.$store.commit("setLoginIs", document.cookie ? true : false);
+      this.$store.commit("setLoginIs", localStorage.getItem("user") ? true : false);
     },
     //退出登录
     exitLogin() {
@@ -111,6 +112,12 @@ export default {
       removeItem("user");
       // this.loginIs = false;
     },
+    //跳转到个人页面
+    profile() {
+      debugger;
+      console.log(1);
+      this.$router.push("/profile")
+    }
   },
 
   async mounted() {

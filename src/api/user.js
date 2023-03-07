@@ -45,7 +45,7 @@ export const following = (data) => {
     return request({
         method: "put",
         url: "/user/following/" + data,
-        headers: { 'Authorization': getItem('user').token }
+        // headers: { 'Authorization': getItem('user').token }
     })
 }
 
@@ -56,7 +56,7 @@ export const cancelFollowing = data => {
     return request({
         method: "delete",
         url: "/user/following/" + data ,
-        headers: { 'Authorization': getItem('user').token }
+        // headers: { 'Authorization': getItem('user').token }
     })
 }
 

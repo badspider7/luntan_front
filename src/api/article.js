@@ -25,7 +25,7 @@ export const createArticle = (data) => {
         method: "post",
         url: "/articles",
         data,
-        headers: { 'Authorization': getItem('user').token }
+        // headers: { 'Authorization': getItem('user').token }
     })
 }
 
