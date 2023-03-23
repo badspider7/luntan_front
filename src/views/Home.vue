@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <el-container>
+      <createQuestion></createQuestion>
       <!-- 头部 -->
       <Header></Header>
 
@@ -44,9 +45,10 @@
 <script>
 import Sidebar from "../components/SideBar.vue";
 import Header from "../components/Header.vue";
+import createQuestion from '../components/createQuestion.vue'
 export default {
   name: "Home",
-  components: { Sidebar, Header },
+  components: { Sidebar, Header ,createQuestion},
   data() {
     return {
       input: "",

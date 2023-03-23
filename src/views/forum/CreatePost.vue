@@ -132,25 +132,27 @@ export default {
       },
       //上传图片和文件
       upload: {
-        url: "https://www.baidu.com",
-        msg: "上传成功",
-        code: 0,
-        data: {
-          errFiles: ["filename", "filename2"],
-          succMap: {
-            filename3: "filepath3",
-          },
-        },
+      accept: 'image/*,.mp3, .wav, .rar',
+      token: 'test',
+      url: 'http://localhost:3000',
+      linkToImgUrl: 'http://localhost:3000',
+      filename (name) {
+        return name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, '').
+          replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, '').
+          replace('/\\s/g', '')
       },
+    },
       placeholder: "展示你的才华吧",
       //显示大纲
       outline: {
-        enable: false,
-        position: "right",
+        enable: true,
+        position: "left",
       },
       //是否使用localStorage进行缓存
       cache: {
         enable: true,
+        id: 1,
+        // after(),
       },
       after: () => {
         this.contentEditor.setValue("");

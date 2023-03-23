@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: getItem('user'), //当前登录用户的登录状态
-    loginIs: false   //是否登录
+    loginIs: false ,  //是否登录
+    visible: false   //是否显示提出问题弹出框
   },
   mutations: {
     setUser(state, data) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     setLoginIs(state,data) {
       state.loginIs = data
+    },
+    isShowDrawer(state, data) {
+      state.visible = data
     }
   },
   actions: {

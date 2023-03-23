@@ -1,8 +1,5 @@
 <template>
   <div class="SideBar">
-    <div style="display: none">
-      <createQuestion></createQuestion>
-    </div>
     <nav class="sideNav">
       <ul>
         <li class="item-navDiscussion">
@@ -14,7 +11,7 @@
           >
         </li>
         <li class="item-navDiscussion">
-          <el-button type="primary" @click="createQuestion">
+          <el-button type="primary" @click="showDrawer">
             <svg class="icon">
               <use xlink:href="#icon-tubiaozhizuomoban-"></use>
             </svg>
@@ -75,62 +72,30 @@
   </div>
 </template>
 <script>
-import createQuestion from "./createQuestion.vue";
 export default {
   name: "SideBar",
-  components: { createQuestion },
   data() {
     return {
-      questionRootHtml: {},
     };
   },
   created() {
-    //bug  debugger   提问题模块未完成
-    this.$nextTick(() => {
-      this.$on("getRootHTML", function (val) {
-        this.questionRootHtml = val;
-        console.log(val);
-      });
-    });
+ 
   },
-  computed: {},
+  mounted() {
+  },
+  computed: {
+    
+  },
   methods: {
     createArticle() {
       this.$router.push({ name: "createQuestion" });
     },
-    createQuestion() {
-      const h = this.$createElement;
-      this.$msgbox({
-        title: "提问题",
-        message: h("p", null, [
-          h("template", null, this.questionRootHtml), // 递归  子组件 dom 树
-        ]),
-        showCancelButton: true,
-        confirmButtonText: "提交",
-        cancelButtonText: "取消",
-        center: true,
-        // beforeClose: (action, instance, done) => {
-        //   if (action === "confirm") {
-        //     done()
-        //     // instance.confirmButtonLoading = true;
-        //     // instance.confirmButtonText = "执行中...";
-        //     // setTimeout(() => {
-        //     //   done();
-        //     //   setTimeout(() => {
-        //     //     instance.confirmButtonLoading = false;
-        //     //   }, 300);
-        //     // }, 3000);
-        //   } else {
-        //     done();
-        //   }
-        // },
-      }).then((action) => {
-        this.$message({
-          type: "info",
-          message: "action: " + action,
-        });
-      });
-    },
+    //提出问题
+    showDrawer() {
+      // let visible = !this.$store.state.visible
+      
+      this.$store.commit('isShowDrawer',true)
+    }
   },
 };
 </script>

@@ -1,7 +1,7 @@
 :root {
   --body-bg-color: #fff;
-   --error-btn-color: #d90c20;
-    --normal-btn-color: #18b965;
+  --error-btn-color: #d90c20;
+  --normal-btn-color: #18b965;
 }
 
 
@@ -51,6 +51,17 @@ body {
   img {
     width: 45vw;
   }
+}
+
+//问题弹出框
+.el-drawer.btt{
+  animation: none !important;
+}
+.el-drawer.btt,
+.el-drawer.ttb {
+  width: 60vw !important;
+  left: 50% !important;
+  transform: translate(-50%, 0);
 }
 
 // .el-page{

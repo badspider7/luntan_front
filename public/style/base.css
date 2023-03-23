@@ -44,3 +44,14 @@ body {
 .question-detail .question-body .content .post .post-item .post-body[data-v-2b8b2d74] img {
   width: 45vw;
 }
+
+.el-drawer.btt {
+  animation: none !important;
+}
+
+.el-drawer.btt,
+.el-drawer.ttb {
+  width: 60vw !important;
+  left: 50% !important;
+  transform: translate(-50%, 0);
+}
