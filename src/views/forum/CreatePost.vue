@@ -74,7 +74,7 @@ export default {
         })
         .catch(() => {
           this.$message({
-            type: "success",
+            type: "warning",
             message: "已取消发表",
           });
         });

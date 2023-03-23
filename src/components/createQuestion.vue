@@ -58,14 +58,32 @@ export default {
 
     //提交问题
     async submit() {
-      const { data } = await createQuestion({
-        title: this.title,
-        description: this.description,
-      });
-      console.log(data);
+      try {
+        const { data } = await createQuestion({
+          title: this.title,
+          description: this.description,
+        });
+        this.$message({
+          message: "问题发表成功",
+          type: "success",
+          duration: 1500,
+        });
+        window.location.reload()
+        this.$store.commit("isShowDrawer", false);
+      } catch (err) {
+        console.log(err);
+        const errorMsg = err.response.data.msg
+        this.$message({
+          message: errorMsg.slice(1,2) === 't'? '请输入问题的标题':'请输入问题的描述',
+          type: "error",
+          duration: 1500
+        })
+      }
     },
     //取消提交
-    cancel() {},
+    cancel() {
+      this.handleClose(true);
+    },
   },
 };
 </script>

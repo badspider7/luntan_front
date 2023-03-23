@@ -53,7 +53,7 @@ export const createQuestion = data => {
     return request({
         method: "post",
         url: "/questions",
-        params: data,
+        data,
         // headers:{ 'Authorization': getItem('user').token }
     })
 }
