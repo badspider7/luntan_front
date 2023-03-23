@@ -1,6 +1,6 @@
 <template>
   <div class="ArticleListItem">
-    <router-link :to="`${article.data._id}`" class="discussionListItem">
+    <div class="discussionListItem">
       <div class="discussionItem-content">
         <div class="item-avatar">
           <router-link to="/profile/2">
@@ -29,12 +29,17 @@
               {{ article.data.topics[0] ? article.data.topics[0].name : "" }}
             </router-link>
           </div>
+          <div class="deleteQuestion" @click="deleteQtion">
+            <i class="el-icon-delete"></i>
+            <span>删除</span>
+          </div>
         </div>
       </div>
-    </router-link>
+    </div>
   </div>
 </template>
 <script>
+import { deleteQuestion } from '../../api/question';
 export default {
   props: {
     article: {
@@ -44,7 +49,23 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    //删除问题
+    async deleteQtion() {
+      try {
+        const { data } = await deleteQuestion(this.article.data._id)
+        this.$message({
+          message: "删除文章成功",
+          type: "success",
+          duration:1500
+        })
+      } catch (err) {
+        console.log(err);
+      }
+     
+      
+    }
+  },
 };
 </script>
 <style scoped lang="scss">
@@ -68,7 +89,7 @@ export default {
     }
     .item-title {
       font-size: 15px;
-      a:hover{
+      a:hover {
         color: chocolate;
       }
     }
@@ -77,7 +98,7 @@ export default {
       bottom: 0px;
       left: 55px;
       font-size: 13px;
-      a:hover{
+      a:hover {
         color: chocolate;
       }
     }
@@ -88,6 +109,13 @@ export default {
       background-color: rgb(238 225 219);
       padding: 7px;
       border-radius: 6px;
+    }
+    .deleteQuestion {
+      position: absolute;
+      right: 0;
+      top: 2px;
+      padding: 5px;
+      color: #050505;
     }
   }
 }

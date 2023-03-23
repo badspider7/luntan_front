@@ -57,3 +57,14 @@ export const createQuestion = data => {
         // headers:{ 'Authorization': getItem('user').token }
     })
 }
+
+
+/**
+ * 删除问题
+ */
+export const deleteQuestion = data => {
+    return request({
+        method: "delete",
+        url: "/questions/"+data,
+    })
+}
