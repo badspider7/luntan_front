@@ -41,8 +41,10 @@ export const getAnswer = data => {
 export const createAnswer = data => {
     return request({
         method: "post",
-        url: "/questions/:questionId/answers",
-        data
+        url: "/questions/"+data.questionId+"/answers",
+        data:{
+            content: data.content
+        }
     })
 }
 

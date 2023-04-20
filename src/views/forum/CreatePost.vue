@@ -45,6 +45,7 @@ export default {
           },
           "user"
         );
+        console.log(res);
         this.$message({
           message: "文章发表成功",
           type: "success",

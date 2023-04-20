@@ -81,37 +81,6 @@ export default {
         });
     },
 
-    //提交问题
-    async submit() {
-      try {
-        const { data } = await createQuestion({
-          title: this.title,
-          description: this.description,
-          topics: [this.topicInfo[0]._id],
-        });
-        if (!this.hasTopic) {
-          getTopics()
-        }
-        this.$message({
-          message: "问题发表成功",
-          type: "success",
-          duration: 1500,
-        });
-        window.location.reload();
-        this.$store.commit("isShowDrawer", false);
-      } catch (err) {
-        console.log(err);
-        const errorMsg = err.response.data.msg;
-        this.$message({
-          message:
-            errorMsg.slice(1, 2) === "t"
-              ? "请输入问题的标题"
-              : "请输入问题的描述",
-          type: "error",
-          duration: 1500,
-        });
-      }
-    },
     //取消提交
     cancel() {
       this.handleClose(true);
@@ -148,6 +117,39 @@ export default {
       } else {
         //话题不存在，就创建话题
         this.hasTopic = false
+      }
+    },
+
+        //提交问题
+        async submit() {
+      try {
+        const { data } = await createQuestion({
+          title: this.title,
+          description: this.description,
+          topics: [this.topicInfo[0]._id??''],
+        });
+        console.log(data);
+        if (!this.hasTopic) {
+          getTopics()
+        }
+        this.$message({
+          message: "问题发表成功",
+          type: "success",
+          duration: 1500,
+        });
+        window.location.reload();
+        this.$store.commit("isShowDrawer", false);
+      } catch (err) {
+        console.log(err);
+        const errorMsg = err.response.data.msg;
+        this.$message({
+          message:
+            errorMsg.slice(1, 2) === "t"
+              ? "请输入问题的标题"
+              : "请输入问题的描述",
+          type: "error",
+          duration: 1500,
+        });
       }
     },
   },

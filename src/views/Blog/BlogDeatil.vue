@@ -23,6 +23,9 @@
         </div>
         <div class="author"></div>
         <!-- <comment></comment> -->
+        <article class="comments">
+          <div id="vcomments"></div>
+        </article>
       </div>
     </div>
     <Footer></Footer>
@@ -32,9 +35,10 @@
 import Header from "../../components/Header.vue";
 import Vditor from "../../utils/method.min.js";
 import { getArticle } from "../../api/article";
-import comment from "../../components/comment.vue";
+// import comment from "../../components/comment.vue";
+import Valine from 'valine';
 export default {
-  components: { Header, comment },
+  components: { Header },
   data() {
     return {
       title: "xx",
@@ -85,6 +89,18 @@ export default {
   },
   async mounted() {
     this.articleDetail();
+    new Valine({
+    el:'#vcomments',
+    appId: 'b0eJrfmaMaPyjkhrrSb0yDYw-gzGzoHsz',
+      appKey: 'CNysLU0B0JfijaeVpk8Xko7a',
+      placeholder: 'hi,我是小宁',
+      pageSize: 15,
+      visitor: true,
+      recordIP: true,
+      enableQQ: true,
+      avatar: robohash,
+      path: window.location.href
+}) 
   },
 };
 </script>
@@ -173,6 +189,10 @@ export default {
         }
       }
     }
+  }
+  .comments{
+    grid-column-start: 2;
+    margin-top: 2em;
   }
 }
 </style>
