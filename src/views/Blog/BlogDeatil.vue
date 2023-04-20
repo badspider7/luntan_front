@@ -22,6 +22,7 @@
           <article class="board-container"></article>
         </div>
         <div class="author"></div>
+        <!-- <comment></comment> -->
       </div>
     </div>
     <Footer></Footer>
@@ -31,8 +32,9 @@
 import Header from "../../components/Header.vue";
 import Vditor from "../../utils/method.min.js";
 import { getArticle } from "../../api/article";
+import comment from "../../components/comment.vue";
 export default {
-  components: { Header },
+  components: { Header, comment },
   data() {
     return {
       title: "xx",
