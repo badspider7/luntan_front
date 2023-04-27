@@ -50,9 +50,10 @@
   </div>
 </template>
 <script>
-import { Topic,createTopic } from "../api/topic";
+import { Topic, createTopic } from "../api/topic";
 import { mapState } from "vuex";
 import { createQuestion } from "../api/question";
+import { MessageBox } from "element-ui";
 export default {
   data() {
     return {
@@ -63,7 +64,7 @@ export default {
       isShowTopic: false,
       topicValue: "",
       topicInfo: {},
-      hasTopic: true
+      hasTopic: true,
     };
   },
   computed: {
@@ -87,11 +88,11 @@ export default {
     },
     async getTopics() {
       const { data } = await createTopic({
-        name:this.topicValue
-      })
+        name: this.topicValue,
+      });
       console.log(data);
-    }, 
-    
+    },
+
     async commitTopic() {
       const { data } = await Topic(this.topicValue);
       this.topicInfo = data.data;
@@ -116,29 +117,51 @@ export default {
         this.isShowTopic = false;
       } else {
         //话题不存在，就创建话题
-        this.hasTopic = false
+        this.hasTopic = false;
       }
     },
 
-        //提交问题
-        async submit() {
+    //提交问题
+    async submit() {
       try {
-        const { data } = await createQuestion({
-          title: this.title,
-          description: this.description,
-          topics: [this.topicInfo[0]._id??''],
-        });
-        console.log(data);
-        if (!this.hasTopic) {
-          getTopics()
+        if (window.localStorage.getItem("user")) {
+          if (
+            this.title.trim().length !== 0 &&
+            this.description.trim().length !== 0
+          ) {
+            const { data } = await createQuestion({
+              title: this.title,
+              description: this.description,
+              topics: [this.topicInfo[0]._id ?? ""],
+            });
+            console.log(data);
+            if (!this.hasTopic) {
+              getTopics();
+            }
+            this.$message({
+              message: "问题发表成功",
+              type: "success",
+              duration: 1500,
+            });
+            window.location.reload();
+            this.$store.commit("isShowDrawer", false);
+          } else {
+            alert('请输入内容！')
+          }
+        } else {
+          MessageBox.confirm("此页面需要登录,请前往登录", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning",
+          }).then(() => {
+            router.replace(
+              {
+                name: "",
+              },
+              () => {}
+            );
+          });
         }
-        this.$message({
-          message: "问题发表成功",
-          type: "success",
-          duration: 1500,
-        });
-        window.location.reload();
-        this.$store.commit("isShowDrawer", false);
       } catch (err) {
         console.log(err);
         const errorMsg = err.response.data.msg;

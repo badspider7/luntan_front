@@ -21,3 +21,13 @@ export const createTopic = data => {
         data
     })
 }
+
+/**
+ * 获取话题列表
+ */
+export const TopicList = () => {
+    return request({
+        method: 'get',
+        url: 'topics'
+    })
+}

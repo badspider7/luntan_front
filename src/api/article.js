@@ -38,3 +38,23 @@ export const getArticle = data => {
         url:"/articles/"+data
     })
 }
+
+/**
+ * 获取分类列表
+ */
+export const categoryList = () => {
+    return request({
+        method: 'get',
+        url:'/categories'
+    })
+}
+
+/**
+ * 模糊搜索
+ */
+export const search = (data) => {
+    return request({
+        method: 'get',
+        url: '/articles/search/'+data,
+    })
+}

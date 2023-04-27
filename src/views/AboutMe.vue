@@ -18,8 +18,7 @@
                 placement="bottom"
               >
                 <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-github">
-                  </use>
+                  <use xlink:href="#icon-github"></use>
                 </svg>
               </el-tooltip>
               <el-tooltip
@@ -44,21 +43,42 @@
               </el-tooltip>
             </div>
           </li>
-          <li>
-            <svg>
-              <use></use>
-            </svg>
-          </li>
         </ul>
+        <div class="interesting">
+          <div class="i-title">我的兴趣</div>
+          <ul>
+            <li>指弹吉他（不要问，问就是 532313）</li>
+            <li>python （爬虫方向，目前还在学习当中）</li>
+            <li>前端 （加油努力学习）</li>
+            <li>养花养草</li>
+            <li>和我家的猪猪一起吃超级多好吃的</li>
+            <li>网易云</li>
+          </ul>
+        </div>
+        <div class="contact">
+          <div class="i-title">联系我</div>
+          <ul>
+            <li>Eamil:1742969779@qq.com</li>
+            <li>Github:https://github.com/badspider7.git</li>
+          </ul>
+        </div>
+        <div class="website">
+          <div class="i-title">我的博客</div>
+          <ul>
+            <li>念伊的小窝:https://www.badspider.top</li>
+          </ul>
+        </div>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
 import Header from "../components/Header.vue";
+import Footer from "../components/Footer.vue";
 export default {
   name: "AboutMe",
-  components: { Header },
+  components: { Header,Footer },
   data() {
     return {};
   },
@@ -74,6 +94,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     ul {
       .name {
         display: flex;
@@ -93,6 +114,13 @@ export default {
         }
       }
       .slogn {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .item {
+          margin-right: 10px;
+        }
         .icon {
           width: 1.5rem;
           height: 1.5rem;
@@ -100,6 +128,23 @@ export default {
             cursor: pointer;
             fill: blue;
           }
+        }
+      }
+    }
+    .interesting,.contact,.website {
+      align-self: flex-start;
+      width: 100%;
+      margin-top: 10px;
+      .i-title {
+        font-size: 2em;
+        border-bottom: 1px solid #ccc;
+        margin-top: 10px;
+        margin-bottom: 0.75em;
+      }
+      ul {
+        li {
+          list-style: disc !important;
+          margin-bottom: 5px;
         }
       }
     }

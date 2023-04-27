@@ -1,22 +1,20 @@
-// var isPalindrome = function(x) {
-//     let len = x.toString().length;
-//     let i = 0,j=len-1;
-//     while(i<j){
-//         if (x[i] == x[j]) {
-//             console.log(x[i]);
-//             i++;
-//             j--;
-//         }else{
-//             return false
-//         }
-//     }
+let time = new Date()
 
-//     return true
-// };
+// console.log(time);
 
-// console.log(isPalindrome(-121));
+// function localDate(v) {
 
+//     const d = new Date(v || Date.now());
+    
+//     d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    
+//     return d.toISOString();
+    
+// }
+    
 
-let x = 222;
-x.toString()
-console.log(x);
+// console.log(localDate(time));
+
+const moment = require('moment-timezone');
+const createdAt = moment.utc(time).tz('Asia/Shanghai');
+console.log(createdAt.format());

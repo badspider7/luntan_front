@@ -57,8 +57,8 @@ const routes = [{
     }
   },
   {
-    name: "Tags", //问题的话题
-    path: "/tags/:id",
+    name: "Tags", //话题列表
+    path: "/tags",
     component: () => import("../views/Tags.vue"),
     meta: {
       Auth: false
@@ -110,6 +110,15 @@ const routes = [{
     meta: {
       Auth: true,
       title:"个人主页"
+    }
+  },
+  {
+    name:'category', //文章分类
+    path: '/category',
+    component: () => import('../views/Category.vue'),
+    meta: {
+      Auth: false,
+      title: '文章分类'
     }
   },
   {

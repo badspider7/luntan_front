@@ -22,7 +22,7 @@
           <div class="item-count">
             <ul>
               <li class="item-tags">
-                <router-link to="/">
+                <router-link to="/category">
                   <i class="el-icon-menu"></i>
                   <span>文章分类</span>
                 </router-link>
@@ -47,12 +47,12 @@
                 </router-link>
               </li>
               <li class="item-front">
-                <a href="#">
+                <router-link to="/tags">
                   <i class="el-icon-brush"></i>
                   <span>话题</span>
-                </a>
+                </router-link>
               </li>
-              <li class="item-backEnd">
+              <!-- <li class="item-backEnd">
                 <a href="#">
                   <i class="el-icon-smoking"></i>
                   <span>后端</span>
@@ -63,7 +63,7 @@
                   <i class="el-icon-toilet-paper"></i>
                   <span>前端</span>
                 </a>
-              </li>
+              </li> -->
             </ul>
           </div>
         </li>

@@ -23,13 +23,32 @@
                 class="FormControl"
                 placeholder="搜索"
                 @focus="isShowSlogan = false"
-                @blur="isShowSlogan = true"
+                @blur="inputBlur"
+                @keydown.enter="search"
               />
+              <div class="search-content" v-show="isShowSearch">
+                <div class="art">
+                  <div v-for="item in searchInfo.article" :key="item._id">
+                    <router-link
+                      :to="`/blog/${item._id}`"
+                      @click="console.log(1)"
+                      >{{ item.title }}</router-link
+                    >
+                  </div>
+                </div>
+                <div class="art">
+                  <div v-for="item in searchInfo.question" :key="item._id">
+                    <router-link :to="`/${item._id}`">{{
+                      item.title
+                    }}</router-link>
+                  </div>
+                </div>
+              </div>
             </div>
           </li>
           <li class="item-chatRoom">
             <div class="chatRoom">
-              <router-link to="/chatroom">聊天室</router-link>
+              <a href="http://localhost:3001" target="_blank">聊天室</a>
             </div>
           </li>
           <li class="item-singUp" v-if="!loginIs">
@@ -52,8 +71,7 @@
               <el-dropdown-menu class="dropdown-menu" slot="dropdown">
                 <el-dropdown-item icon="el-icon-user-solid">
                   <router-link to="/profile">个人主页</router-link>
-                  </el-dropdown-item
-                >
+                </el-dropdown-item>
                 <el-dropdown-item icon="el-icon-s-tools">设置</el-dropdown-item>
                 <el-dropdown-item :divided="true" icon="el-icon-caret-right"
                   ><span @click="exitLogin">退出</span></el-dropdown-item
@@ -75,6 +93,7 @@ import { mapState } from "vuex";
 import { poetry } from "../api/user";
 import { removeItem } from "../utils/storage";
 import LoginAndRegister from "../views/LoginAndRegister.vue";
+import { search } from "../api/article";
 export default {
   components: { LoginAndRegister },
   props: ["title"],
@@ -82,13 +101,19 @@ export default {
     return {
       input: "",
       isShowSlogan: true,
+      isShowSearch: false,
       poem: "",
+      searchInfo: {},
     };
   },
   computed: {
     ...mapState(["loginIs"]),
   },
   methods: {
+    inputBlur() {
+      this.isShowSlogan = true;
+      this.isShowSearch = false;
+    },
     //登录注册
     loginAndRegister(type) {
       this.$refs.loginAndRegisterRef.showPanel(type);
@@ -104,7 +129,10 @@ export default {
     //判断是否登录
     isLogin() {
       // this.loginIs = document.cookie ? true : false;
-      this.$store.commit("setLoginIs", localStorage.getItem("user") ? true : false);
+      this.$store.commit(
+        "setLoginIs",
+        localStorage.getItem("user") ? true : false
+      );
     },
     //退出登录
     exitLogin() {
@@ -116,8 +144,36 @@ export default {
     profile() {
       debugger;
       console.log(1);
-      this.$router.push("/profile")
-    }
+      this.$router.push("/profile");
+    },
+
+    //模糊搜索
+    async search() {
+      try {
+        if (this.input.trim().length == 0) {
+          this.$notify({
+            title: "失败",
+            message: "不能输入为空",
+            type: "error",
+          });
+        } else {
+          const { data } = await search(this.input);
+          if (data.code == 200) {
+            this.isShowSearch = true;
+            this.searchInfo = data.data;
+          } else {
+            this.$notify({
+              title: "查找失败",
+              message: "没有你想要查找的数据",
+              type: "warning",
+            });
+            this.input = '';
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 
   async mounted() {
@@ -180,6 +236,24 @@ export default {
             background-color: #fff;
             margin-left: -400px;
             border-color: #07c160;
+          }
+        }
+        .search-content {
+          min-height: 100px;
+          position: absolute;
+          width: 400px;
+          border-radius: 4px;
+          background-color: #f2fbf4;
+          left: -390px;
+          padding: 10px;
+          .art {
+            margin-bottom: 10px;
+            div {
+              color: #054016;
+              text-align: left;
+              margin-bottom: 5px;
+              padding-left: 5px;
+            }
           }
         }
       }

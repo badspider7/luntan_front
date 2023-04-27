@@ -39,7 +39,7 @@
   </div>
 </template>
 <script>
-import { deleteQuestion } from '../../api/question';
+import { deleteQuestion } from "../../api/question";
 export default {
   props: {
     article: {
@@ -48,42 +48,45 @@ export default {
   },
   data() {
     return {
-      isShowDelete: false
+      isShowDelete: false,
     };
   },
   methods: {
     //删除问题
     async deleteQtion() {
       try {
-        const { data } = await deleteQuestion(this.article.data._id)
-        window.location.reload()
+        const { data } = await deleteQuestion(this.article.data._id);
+        window.location.reload();
         this.$message({
           message: "删除文章成功",
           type: "success",
-          duration: 1500
-        })
+          duration: 1500,
+        });
       } catch (err) {
         console.log(err);
         this.$message({
           message: "哦豁，删除问题失败啦",
           type: "error",
-          duration: 1500
-        })
+          duration: 1500,
+        });
       }
-
-
     },
     showDelete() {
-      if (JSON.parse(localStorage.getItem('user')).id === this.article.data.questioner._id) {
-        this.isShowDelete = true
-      } else {
-        this.isShowDelete = false
+      if (JSON.parse(localStorage.getItem("user"))) {
+        if (
+          JSON.parse(localStorage.getItem("user")).id ===
+          this.article.data.questioner._id
+        ) {
+          this.isShowDelete = true;
+        } else {
+          this.isShowDelete = false;
+        }
       }
-    }
+    },
   },
   mounted() {
-    this.showDelete()
-  }
+    this.showDelete();
+  },
 };
 </script>
 <style scoped lang="scss">

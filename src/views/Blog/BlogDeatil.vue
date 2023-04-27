@@ -98,7 +98,6 @@ export default {
       visitor: true,
       recordIP: true,
       enableQQ: true,
-      avatar: robohash,
       path: window.location.href
 }) 
   },
