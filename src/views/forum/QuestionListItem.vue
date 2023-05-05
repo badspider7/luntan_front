@@ -15,7 +15,7 @@
               }}</router-link>
             </div>
             <div class="item-username">
-              <router-link to="/profile/2">{{
+              <router-link :to="'/profile/'+article.data.questioner._id">{{
                 article.data.questioner.username
               }}</router-link
               >&nbsp;发布于&nbsp;21&nbsp;天前
@@ -25,7 +25,7 @@
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-shengqian"></use>
             </svg>
-            <router-link to="/tags/3">
+            <router-link to="/tags">
               {{ article.data.topics[0] ? article.data.topics[0].name : "" }}
             </router-link>
           </div>

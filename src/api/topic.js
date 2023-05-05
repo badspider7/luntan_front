@@ -31,3 +31,13 @@ export const TopicList = () => {
         url: 'topics'
     })
 }
+
+/**
+ * 获取每日热搜
+ */
+export const News = () => {
+    return request({
+        method: "get",
+        url:"/news"
+    })
+}

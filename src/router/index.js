@@ -105,7 +105,7 @@ const routes = [{
   },
   {
     name: "profile", //个人主页
-    path: "/profile",
+    path: "/profile/:userid",
     component: () => import("../views/Profile.vue"),
     meta: {
       Auth: true,

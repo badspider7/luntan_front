@@ -40,12 +40,35 @@ export const getArticle = data => {
 }
 
 /**
+ * 删除文章
+ */
+
+export const deleteArt = data => {
+    return request({
+        method: 'delete',
+        url:'/articles/'+ data
+    })
+}
+
+/**
  * 获取分类列表
  */
 export const categoryList = () => {
     return request({
         method: 'get',
         url:'/categories'
+    })
+}
+
+/**
+ * 添加文章分类
+ */
+
+export const addCat = (data) => {
+    return request({
+        method: 'post',
+        url: '/categories',
+        data
     })
 }
 

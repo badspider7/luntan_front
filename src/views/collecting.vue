@@ -4,12 +4,19 @@
     <div class="container">
       <div class="body">
         <div class="banner">
-          <div class="info">收藏</div>
+          <div class="info">头条热搜</div>
         </div>
-        <div class="tags-all">
-          <span class="tag-info" v-for="item in tagList" :key="item._id">
-            {{ item.name }}
-          </span>
+        <div class="tags-all" v-for="(item, index) in newsList" :key="index">
+          <div class="pic">
+            <img :src="item.pic" alt="" />
+          </div>
+          <div class="content">
+            <a :href="item.weburl" target="_blank">{{ item.title }}</a>
+            <div class="news-info">
+              <span>分类:{{ item.category }}</span>
+              <span>发布时间：{{ item.time }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -19,19 +26,24 @@
 <script>
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
-import { TopicList } from "../api/topic";
+import { TopicList, News } from "../api/topic";
 export default {
   name: "Tags",
   components: { Header, Footer },
   data() {
     return {
       tagList: {},
+      newsList: {},
     };
   },
   methods: {
     async getList() {
-      const { data } = await TopicList();
-      this.tagList = data.data;
+      // const { data } = await TopicList();
+      const { data } = await News();
+      const res = data.data;
+      this.tagList = JSON.parse(res);
+      this.newsList = this.tagList.result.result.list;
+      console.log(this.newsList);
     },
   },
   computed: {},
@@ -46,7 +58,8 @@ export default {
     margin-top: 50px;
     .banner {
       height: 420px;
-      background: url("../../public/server-banner.jpg") center center / cover no-repeat;
+      background: url("../../public/server-banner.jpg") center center / cover
+        no-repeat;
       transform: translate3d(0px, 0px, 0px);
       .info {
         color: white;
@@ -65,17 +78,32 @@ export default {
       margin: 0 auto;
       background-color: rgb(255, 255, 255);
       position: relative;
-      margin-top: -2rem;
+      // margin-top: -2rem;
       z-index: 7;
-      padding: 60px 30px;
+      padding: 20px 30px;
       border-radius: 5px;
-      span{
-        font-size: 20px;
-        color: rgb(5, 7, 7);
-        margin: 20px;
-        &:hover{
+      display: flex;
+
+      .pic {
+        img {
+          width: 200px;
+          height: 100px;
+        }
+      }
+      .content {
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+        // align-items: center;
+        .news-info{
+          margin-top: 20px;
+          span{
+            margin-left: 15px;
+          }
+        }
+        a:hover {
           cursor: pointer;
-          color: rgb(25, 112, 146);
+          color: rgb(40, 183, 128);
         }
       }
     }

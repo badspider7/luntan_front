@@ -14,13 +14,13 @@
         </h3>
         <router-link :to="`/blog/${article._id}`" class="article-body"><p v-html="article.excerpt"></p></router-link>
         <div class="article-btm">
-          <!-- <span class="post-time">{{ article.updatedAt }}</span> -->
-          <span class="post-time">2023年3月12日 </span>
-          <router-link to="/"><i class="el-icon-paperclip"></i>
+          <span class="post-time">{{ article.createdAt }}</span>
+          <!-- <span class="post-time">2023年3月12日 </span> -->
+          <router-link to="/category"><i class="el-icon-paperclip"></i>
             <span class="post-tag">{{
               article.category.name
             }}</span></router-link>
-            <router-link to="/" class="article-username">作者:{{ article.author.username }}</router-link>
+            <router-link :to="`/profile/${article.author._id}`" class="article-username">作者:{{ article.author.username }}</router-link>
         </div>
       </article>
     </div>

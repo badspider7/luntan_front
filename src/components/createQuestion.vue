@@ -95,6 +95,7 @@ export default {
 
     async commitTopic() {
       const { data } = await Topic(this.topicValue);
+      console.log(data);
       this.topicInfo = data.data;
       if (data.data.length) {
         //话题存在.给inputs添加一个兄弟结点

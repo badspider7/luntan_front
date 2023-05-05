@@ -70,7 +70,7 @@
 
               <el-dropdown-menu class="dropdown-menu" slot="dropdown">
                 <el-dropdown-item icon="el-icon-user-solid">
-                  <router-link to="/profile">个人主页</router-link>
+                  <router-link :to="'/profile/'+userId">个人主页</router-link>
                 </el-dropdown-item>
                 <el-dropdown-item icon="el-icon-s-tools">设置</el-dropdown-item>
                 <el-dropdown-item :divided="true" icon="el-icon-caret-right"
@@ -104,10 +104,12 @@ export default {
       isShowSearch: false,
       poem: "",
       searchInfo: {},
+      userId:''
     };
   },
   computed: {
     ...mapState(["loginIs"]),
+    ...mapState(["user"]),
   },
   methods: {
     inputBlur() {
@@ -184,6 +186,8 @@ export default {
     } catch (err) {
       console.log(err);
     }
+
+    this.userId = this.user.id
   },
 };
 </script>

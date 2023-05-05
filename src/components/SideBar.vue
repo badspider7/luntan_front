@@ -27,6 +27,12 @@
                   <span>文章分类</span>
                 </router-link>
               </li>
+              <li class="item-collecting">
+                <router-link to="/collections">
+                  <i class="el-icon-coin"></i>
+                  <span>公共信息</span>
+                </router-link>
+              </li>
               <li class="item-blogs">
                 <router-link to="/blog">
                   <i class="el-icon-chat-round"></i>
@@ -38,12 +44,6 @@
                 <router-link to="/following">
                   <i class="el-icon-star-off"></i>
                   <span>关注</span>
-                </router-link>
-              </li>
-              <li class="item-collecting">
-                <router-link to="/collections">
-                  <i class="el-icon-coin"></i>
-                  <span>收藏</span>
                 </router-link>
               </li>
               <li class="item-front">
@@ -75,17 +75,11 @@
 export default {
   name: "SideBar",
   data() {
-    return {
-    };
+    return {};
   },
-  created() {
- 
-  },
-  mounted() {
-  },
-  computed: {
-    
-  },
+  created() {},
+  mounted() {},
+  computed: {},
   methods: {
     createArticle() {
       this.$router.push({ name: "createQuestion" });
@@ -93,9 +87,9 @@ export default {
     //提出问题
     showDrawer() {
       // let visible = !this.$store.state.visible
-      
-      this.$store.commit('isShowDrawer',true)
-    }
+
+      this.$store.commit("isShowDrawer", true);
+    },
   },
 };
 </script>

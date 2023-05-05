@@ -80,3 +80,13 @@ export const followerList = data => {
     })
 }
 
+/**
+ * 获取用户详细信息
+ */
+export const getUserInfo = data => {
+    return request({
+        method: 'get',
+        url: '/user/'+data
+    })
+}
+

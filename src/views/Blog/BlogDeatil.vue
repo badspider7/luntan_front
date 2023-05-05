@@ -1,15 +1,18 @@
 <template>
   <div class="article-detail">
-    <Header :title="title" id="article-header"></Header>
+    <Header  id="article-header"></Header>
     <div class="banner" style="">
       <div class="mask">
         <div class="page-header">
           <span class="subtitle">{{ articleInfo.title }}</span>
           <div class="post-time">
-            <span>2021年3月23日</span>
+            <span>{{ articleInfo.createdAt }}</span>
           </div>
           <div class="post-btm">
-            <span>18k字</span>
+            <!-- <span>18k字</span> -->
+            <span class="delete" v-if="isShowDelete" @click="deleteArticle"
+              >删除</span
+            >
             <span>阅读人数:&nbsp;&nbsp;&nbsp;{{ articleInfo.view }}</span>
           </div>
         </div>
@@ -34,15 +37,16 @@
 <script>
 import Header from "../../components/Header.vue";
 import Vditor from "../../utils/method.min.js";
-import { getArticle } from "../../api/article";
+import { getArticle, deleteArt } from "../../api/article";
 // import comment from "../../components/comment.vue";
-import Valine from 'valine';
+import Valine from "valine";
 export default {
   components: { Header },
   data() {
     return {
-      title: "xx",
+      // title: "xx",
       articleInfo: {},
+      isShowDelete: false,
     };
   },
   methods: {
@@ -53,6 +57,11 @@ export default {
         this.$router.currentRoute.params.articleId
       );
       this.articleInfo = data.data;
+      let user = window.localStorage.getItem("user");
+
+      if (JSON.parse(user).id == this.articleInfo.author._id) {
+        this.isShowDelete = true;
+      }
       //把拿到的数据渲染到页面上去
       const previewElement = document.querySelector(".board-container");
       const html = await Vditor.md2html(`${this.articleInfo.content}`);
@@ -86,20 +95,35 @@ export default {
         }
       });
     },
+
+    //删除文章
+    async deleteArticle() {
+      try {
+        const { data } = await deleteArt(this.articleInfo._id);
+        console.log(data);
+        this.$message({
+          type: 'success',
+          message:"删除文章成功"
+        })
+        this.$router.push({path:'/blog',replace:true})
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
   async mounted() {
     this.articleDetail();
     new Valine({
-    el:'#vcomments',
-    appId: 'b0eJrfmaMaPyjkhrrSb0yDYw-gzGzoHsz',
-      appKey: 'CNysLU0B0JfijaeVpk8Xko7a',
-      placeholder: 'hi,我是小宁',
+      el: "#vcomments",
+      appId: "b0eJrfmaMaPyjkhrrSb0yDYw-gzGzoHsz",
+      appKey: "CNysLU0B0JfijaeVpk8Xko7a",
+      placeholder: "hi,我是小宁",
       pageSize: 15,
       visitor: true,
       recordIP: true,
       enableQQ: true,
-      path: window.location.href
-}) 
+      path: window.location.href,
+    });
   },
 };
 </script>
@@ -147,6 +171,12 @@ export default {
       }
       .post-btm {
         margin-top: 0.25rem;
+        .delete {
+          cursor: pointer;
+          &:hover {
+            color: rgb(44, 115, 181);
+          }
+        }
         span:last-child {
           margin-left: 1rem;
         }
@@ -189,7 +219,7 @@ export default {
       }
     }
   }
-  .comments{
+  .comments {
     grid-column-start: 2;
     margin-top: 2em;
   }
