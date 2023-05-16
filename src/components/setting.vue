@@ -22,27 +22,49 @@
                 <h3 class="username">
                   {{ userInfo.username }}
                 </h3>
+                <div class="modify-inner"  v-if="isModify">
+                  <el-input v-model="userInfo.username"></el-input>
+                </div>
                 <div class="slogn">
                   <span style="font-weight: 800; margin-right: 20px"
                     >个人简介</span
                   >
                   {{ userInfo.slogn }}
                 </div>
+                <div class="modify-inner" v-if="isModify">
+                  <el-input v-model="userInfo.slogn"></el-input>
+                </div>
               </div>
               <div class="detail-user">
                 <ul>
                   <li>性别：{{ userInfo.gender == "male" ? "男" : "女" }}</li>
+                  <div class="modify-inner" v-if="isModify">
+                    <el-input v-model="userInfo.gender"></el-input>
+                  </div>
                   <li>邮箱：{{ userInfo.email }}</li>
+                  <div class="modify-inner" v-if="isModify">
+                    <el-input v-model="userInfo.email"></el-input>
+                  </div>
                   <li>
                     职业：{{
                       userInfo.business
                     }}
+                    <div class="modify-inner" v-if="isModify">
+                      <el-input v-model="userInfo.business"></el-input>
+                    </div>
                   </li>
-                  <li>现居住地：{{userInfo.locations}}</li>
+                  <li>现居住地：{{ userInfo.locations }}</li>
+                  <div class="modify-inner" v-if="isModify">
+                  <el-input v-model="userInfo.locations"></el-input>
+                </div>
                 </ul>
               </div>
             </div>
           </div>
+        </div>
+        <div class="modify">
+          <el-button @click="isModify=true">修改信息</el-button>
+          <el-button @click="modifyInfo" v-if="isModify">确认</el-button>
         </div>
       </div>
     </div>
@@ -50,13 +72,14 @@
 </template>
 <script>
 import Header from "../components/Header.vue";
-import { getUserInfo } from "../api/user";
+import { getUserInfo, modifyUserInfo } from "../api/user";
 export default {
   components: { Header },
   data() {
     return {
       userInfo: {},
       size: "",
+      isModify: false
     };
   },
   methods: {
@@ -65,6 +88,15 @@ export default {
       // console.log(data.data);
       this.userInfo = data.data.user;
     },
+
+    async modifyInfo() {
+      this.isModify = false
+      const { data } = await modifyUserInfo(this.userInfo)
+      this.$message({
+        type: 'success',
+        message:"个人信息修改成功"
+      })
+    }
   },
   mounted() {
     this.getUser();
@@ -120,7 +152,7 @@ export default {
           }
         }
         .detail-user {
-          width:320px;
+          width: 320px;
           ul li {
             margin-bottom: 20px;
           }
@@ -128,5 +160,9 @@ export default {
       }
     }
   }
+}
+
+.el-input{
+  width: 200px;
 }
 </style>

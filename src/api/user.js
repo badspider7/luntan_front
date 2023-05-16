@@ -90,3 +90,22 @@ export const getUserInfo = data => {
     })
 }
 
+/**
+ * 修改用户信息
+ */
+export const modifyUserInfo = data => {
+    return request({
+        method: 'patch',
+        url: '/user/' + data._id,
+        data: {
+            "username": data.username,
+            "email": data.email,
+            "gender": data.gender,
+            "slogn": data.slogn,
+            "business": data.business,
+            "locations": data.locations,
+            "password": '123123'
+        }
+    })
+}
+

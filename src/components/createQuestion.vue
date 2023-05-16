@@ -165,7 +165,7 @@ export default {
         }
       } catch (err) {
         console.log(err);
-        const errorMsg = err.response.data.msg;
+        const errorMsg = err;
         this.$message({
           message:
             errorMsg.slice(1, 2) === "t"

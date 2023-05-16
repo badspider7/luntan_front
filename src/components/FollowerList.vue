@@ -22,20 +22,30 @@
           <span class="follower-tip">关注了你</span>
           <div class="slogn">个人简介： {{ follower.slogn }}</div>
         </div>
-        <div class="extra" ref="extra">
-          <!-- 关注作者 -->
-          <div class="extra-body" v-if="!isFollowing" @click="getFollowing(follower)">
-            <svg class="icon">
-              <use xlink:href="#icon-jiaguanzhuhuati"></use>
-            </svg>
-            <span>关注</span>
-          </div>
-          <!-- 取消关注 -->
-          <div class="extra-body deleteFollower" v-if="isFollowing" @click="getCancelFollowing(follower)">
-            <svg class="icon">
-              <use xlink:href="#icon-jiaguanzhuhuati"></use>
-            </svg>
-            <span>取消关注</span>
+        <div v-if="false">
+          <div class="extra" ref="extra">
+            <!-- 关注作者  bug-->
+            <div
+              class="extra-body"
+              v-if="!isFollowing"
+              @click="getFollowing(follower)"
+            >
+              <svg class="icon">
+                <use xlink:href="#icon-jiaguanzhuhuati"></use>
+              </svg>
+              <span>关注</span>
+            </div>
+            <!-- 取消关注 -->
+            <div
+              class="extra-body deleteFollower"
+              v-if="isFollowing"
+              @click="getCancelFollowing(follower)"
+            >
+              <svg class="icon">
+                <use xlink:href="#icon-jiaguanzhuhuati"></use>
+              </svg>
+              <span>取消关注</span>
+            </div>
           </div>
         </div>
       </div>
@@ -43,13 +53,13 @@
   </div>
 </template>
 <script>
-import { followerList ,following, cancelFollowing} from "../api/user";
+import { followerList, following, cancelFollowing } from "../api/user";
 import { getItem } from "../utils/storage";
 export default {
   data() {
     return {
       followerList: {},
-      isFollowing: false
+      isFollowing: false,
     };
   },
   methods: {
@@ -71,7 +81,7 @@ export default {
           duration: 1500,
         });
         console.log(follower);
-        this.isFollowing = true
+        this.isFollowing = true;
       } catch (err) {
         this.$message({
           type: "error",
@@ -91,7 +101,7 @@ export default {
           message: "取消关注成功!",
           duration: 1500,
         });
-        this.isFollowing = false
+        this.isFollowing = false;
       } catch (err) {
         this.$message({
           type: "error",
@@ -99,7 +109,7 @@ export default {
           duration: 1500,
         });
       }
-    }
+    },
   },
   mounted() {
     this.getFollowerList();
@@ -159,16 +169,16 @@ export default {
       background-color: var(--normal-btn-color);
       border-radius: 4px;
       color: #fff;
-      &:hover{
+      &:hover {
         cursor: pointer;
       }
       .extra-body {
         // height: 100%;
-        .icon{
+        .icon {
           margin-right: 5px;
         }
       }
-      .deleteFollower{
+      .deleteFollower {
         font-size: 14px;
         // background-color: #8590a6;
       }

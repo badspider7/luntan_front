@@ -8,12 +8,12 @@
         </div>
         <div class="tags-all" v-for="(item, index) in newsList" :key="index">
           <div class="pic">
-            <img :src="item.pic" alt="" />
+            <img :src="item.imgsrc" alt="" />
           </div>
           <div class="content">
-            <a :href="item.weburl" target="_blank">{{ item.title }}</a>
+            <a :href="item.pc_url" target="_blank">{{ item.title }}</a>
             <div class="news-info">
-              <span>分类:{{ item.category }}</span>
+              <span>分类:{{ item.source }}</span>
               <span>发布时间：{{ item.time }}</span>
             </div>
           </div>
@@ -42,8 +42,7 @@ export default {
       const { data } = await News();
       const res = data.data;
       this.tagList = JSON.parse(res);
-      this.newsList = this.tagList.result.result.list;
-      console.log(this.newsList);
+      this.newsList = this.tagList.data;
     },
   },
   computed: {},

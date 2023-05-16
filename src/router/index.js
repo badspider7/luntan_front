@@ -113,6 +113,15 @@ const routes = [{
     }
   },
   {
+    name: "setting", //个人主页
+    path: "/setting/:userid",
+    component: () => import("../components/setting.vue"),
+    meta: {
+      Auth: true,
+      title:"设置"
+    }
+  },
+  {
     name:'category', //文章分类
     path: '/category',
     component: () => import('../views/Category.vue'),

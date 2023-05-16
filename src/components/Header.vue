@@ -23,7 +23,7 @@
                 class="FormControl"
                 placeholder="搜索"
                 @focus="isShowSlogan = false"
-                @blur="inputBlur"
+                @blur="isShowSlogan = true"
                 @keydown.enter="search"
               />
               <div class="search-content" v-show="isShowSearch">
@@ -72,7 +72,9 @@
                 <el-dropdown-item icon="el-icon-user-solid">
                   <router-link :to="'/profile/'+userId">个人主页</router-link>
                 </el-dropdown-item>
-                <el-dropdown-item icon="el-icon-s-tools">设置</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-s-tools">
+                  <router-link :to="'/setting/'+userId">设置</router-link>
+                </el-dropdown-item>
                 <el-dropdown-item :divided="true" icon="el-icon-caret-right"
                   ><span @click="exitLogin">退出</span></el-dropdown-item
                 >
@@ -113,8 +115,11 @@ export default {
   },
   methods: {
     inputBlur() {
-      this.isShowSlogan = true;
+      setTimeout(() => {
+        this.isShowSlogan = true;
+      }, 2000);
       this.isShowSearch = false;
+
     },
     //登录注册
     loginAndRegister(type) {
@@ -244,11 +249,13 @@ export default {
         }
         .search-content {
           min-height: 100px;
-          position: absolute;
+          // position: absolute;
+          position: fixed;
           width: 400px;
           border-radius: 4px;
           background-color: #f2fbf4;
-          left: -390px;
+          // left: -390px;
+          left: 642px;
           padding: 10px;
           .art {
             margin-bottom: 10px;

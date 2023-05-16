@@ -18,7 +18,7 @@
               <router-link :to="'/profile/'+article.data.questioner._id">{{
                 article.data.questioner.username
               }}</router-link
-              >&nbsp;发布于&nbsp;21&nbsp;天前
+              >&nbsp;发布于&nbsp;{{article.data.createdAt.split("T")[0]}}
             </div>
           </div>
           <div class="article-tag">
